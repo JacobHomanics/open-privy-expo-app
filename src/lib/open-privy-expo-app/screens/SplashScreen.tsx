@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
 import CircularSpinner from '@open-privy-expo-app/components/spinners/CircularSpinner';
-import HPLogo from '../defaults/logos/DefaultAppLogo';
+import DefaultAppLogo from '../defaults/logos/DefaultAppLogo';
 import ErrorBottomSheet, { type ErrorBottomSheetRef } from '@open-privy-expo-app/components/bottom-sheets/ErrorBottomSheet';
 import {
   attemptToResolveErrorMessage,
@@ -13,6 +13,7 @@ import {
   CONNECTION_TIMEOUT_MESSAGE,
   GENERIC_ERROR_MESSAGE,
 } from '@open-privy-expo-app/utils/Error Messages/errorMessages';
+import { appConfig } from '../configs/app';
 const CONNECTION_TIMEOUT_MS = 12_000;
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
@@ -67,8 +68,8 @@ export default function SplashScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <Text style={[styles.title, { color: theme.text }]}>Open Privy Expo App</Text>
-      <HPLogo />
+      <Text style={[styles.title, { color: theme.text }]}>{appConfig.name}</Text>
+      <DefaultAppLogo />
       <View style={styles.spinner}>
         <CircularSpinner />
       </View>
