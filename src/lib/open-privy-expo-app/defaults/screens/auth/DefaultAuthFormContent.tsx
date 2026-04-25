@@ -159,35 +159,6 @@ export function DefaultAuthFormContent({
   return (
     <>
       {<Text style={styles.titleText}>{"Create Account / Sign in"}</Text>}
-      {phoneEnabled && emailEnabled && (
-        <PhoneEmailTabs value={authMethod} onChange={setAuthMethod} />
-      )}
-      {emailEnabled && authMethod === "email" ? (
-        <SendEmailFormContent
-          title={!phoneEnabled ? "Email" : undefined}
-          email={email}
-          onEmailChange={setEmail}
-          onSendCode={() => emailMutation.mutate()}
-          canContinue={isValidEmail(email)}
-          isLoading={emailMutation.isPending}
-        />
-      ) : phoneEnabled ? (
-        <SendPhoneNumberFormContent
-          phoneNumber={phoneNumber}
-          title={!emailEnabled ? "Phone Number" : undefined}
-          onPhoneNumberChange={setPhoneNumber}
-          onSendCode={() => phoneNumberMutation.mutate()}
-          canContinue={isValidUSCanadaPhone(phoneNumber)}
-          isLoading={phoneNumberMutation.isPending}
-        />
-      ) : null}
-      {hasCodeBasedAuth && hasOauthAuth && (
-        <View style={styles.dividerRow}>
-          <View style={styles.dividerLine} />
-          <Text style={styles.dividerLabel}>or</Text>
-          <View style={styles.dividerLine} />
-        </View>
-      )}
       {authProviderFlags.apple && (
         <AuthAppleSignInButton
           theme={theme}
@@ -249,6 +220,35 @@ export function DefaultAuthFormContent({
           </Text>
         </Pressable>
       )}
+      {hasCodeBasedAuth && hasOauthAuth && (
+        <View style={styles.dividerRow}>
+          <View style={styles.dividerLine} />
+          <Text style={styles.dividerLabel}>or</Text>
+          <View style={styles.dividerLine} />
+        </View>
+      )}
+      {phoneEnabled && emailEnabled && (
+        <PhoneEmailTabs value={authMethod} onChange={setAuthMethod} />
+      )}
+      {emailEnabled && authMethod === "email" ? (
+        <SendEmailFormContent
+          title={!phoneEnabled ? "Email" : undefined}
+          email={email}
+          onEmailChange={setEmail}
+          onSendCode={() => emailMutation.mutate()}
+          canContinue={isValidEmail(email)}
+          isLoading={emailMutation.isPending}
+        />
+      ) : phoneEnabled ? (
+        <SendPhoneNumberFormContent
+          phoneNumber={phoneNumber}
+          title={!emailEnabled ? "Phone Number" : undefined}
+          onPhoneNumberChange={setPhoneNumber}
+          onSendCode={() => phoneNumberMutation.mutate()}
+          canContinue={isValidUSCanadaPhone(phoneNumber)}
+          isLoading={phoneNumberMutation.isPending}
+        />
+      ) : null}
     </>
   );
 }
