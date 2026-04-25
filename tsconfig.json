@@ -1,0 +1,12 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    // Allows us to use conditional/deep imports on published packages
+    "moduleResolution": "Bundler",
+    "baseUrl": ".",
+    "paths": {
+      "@open-privy-expo-app/*": ["src/lib/open-privy-expo-app/*"]
+    }
+  }
+}

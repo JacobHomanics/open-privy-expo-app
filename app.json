@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "open-privy-expo-app",
+    "slug": "open-privy-expo-app",
+    "scheme": "open-privy-expo-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.jacobhomanics.openprivyexpoapp",
+      "appleTeamId": "KBB9WY8THT",
+      "usesAppleSignIn": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#E6F4FE",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-web-browser",
+      "expo-font",
+      "expo-apple-authentication"
+    ]
+  }
+}
