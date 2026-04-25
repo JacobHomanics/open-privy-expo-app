@@ -6,8 +6,9 @@ import { useTheme } from "@open-privy-expo-app/theme";
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
 import { config, SHOW_THEME_TOGGLE } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
 import OpenPrivyExpoAppHeader from 'src/components/OpenPrivyExpoAppHeader';
-import WelcomeScreenMessageContent from 'src/components/WelcomeScreenContent';
+import WelcomeScreenBodyTopContent from 'src/components/WelcomeScreenBodyTopContent';
 import { Ionicons } from '@expo/vector-icons';
+import WelcomeScreenBodyBottomContent from 'src/components/WelcomeScreenBodyBottomContent';
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 import { Text } from 'react-native';
 
@@ -96,13 +97,13 @@ export default function WelcomeScreen({ navigation }: Props) {
         style={({ pressed }) => [styles.loginButton, pressed && { opacity: 0.8 }]}
         onPress={() => navigation.navigate('Auth')}
       >
-        {config?.loginButton || loginButtonContent()}
+        {config?.customLoginButton || loginButtonContent()}
       </Pressable>
     )
   }
 
   return (
-    <AppScreenDefaultLayout navigation={navigation} header={config?.header || <OpenPrivyExpoAppHeader />} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
+    <AppScreenDefaultLayout navigation={navigation} header={config?.hideHeader ? undefined : <OpenPrivyExpoAppHeader />} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
       <ScrollView
         style={styles.scroll}
         onLayout={(e) => setScrollViewportHeight(e.nativeEvent.layout.height)}
@@ -119,13 +120,13 @@ export default function WelcomeScreen({ navigation }: Props) {
       >
         <View style={[styles.centerColumn, { minHeight: centerColumnMinHeight }]}>
           <View style={styles.topSlot}>
-            {config?.topBody || <WelcomeScreenMessageContent />}
+            {config?.hideTopBody ? undefined : (config?.customTopBody || <WelcomeScreenBodyTopContent />)}
           </View>
           <View style={styles.loginRow}>
             {loginButton()}
           </View>
           <View style={styles.bottomSlot}>
-            {config?.bottomBody || <WelcomeScreenMessageContent />}
+            {config?.customBottomBody || <WelcomeScreenBodyBottomContent />}
           </View>
         </View>
       </ScrollView>

@@ -3,10 +3,7 @@ import { useMemo } from 'react';
 import type { TextStyle } from 'react-native';
 import { Text } from 'react-native';
 
-export const WELCOME_SCREEN_TITLE = 'Open Privy Expo App';
-
-
-export default function WelcomeScreenMessageContent() {
+export default function WelcomeScreenBodyTopContent() {
   const { theme } = useTheme();
   const tagline = useMemo(() => ({
     fontSize: 18,
