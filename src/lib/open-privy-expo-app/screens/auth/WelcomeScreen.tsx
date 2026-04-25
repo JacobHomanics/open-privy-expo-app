@@ -103,7 +103,7 @@ export default function WelcomeScreen({ navigation }: Props) {
   }
 
   return (
-    <AppScreenDefaultLayout navigation={navigation} header={config?.hideHeader ? undefined : <DefaultAppHeaderCenter />} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
+    <AppScreenDefaultLayout navigation={navigation} header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeaderCenter />)} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
       <ScrollView
         style={styles.scroll}
         onLayout={(e) => setScrollViewportHeight(e.nativeEvent.layout.height)}
@@ -120,13 +120,13 @@ export default function WelcomeScreen({ navigation }: Props) {
       >
         <View style={[styles.centerColumn, { minHeight: centerColumnMinHeight }]}>
           <View style={styles.topSlot}>
-            {config?.hideTopBody ? undefined : (config?.customTopBody || <DefaultBodyTopContent />)}
+            {config?.customTopBody ? config?.customTopBody : (config?.hideTopBody ? undefined : <DefaultBodyTopContent />)}
           </View>
           <View style={styles.loginRow}>
             {loginButton()}
           </View>
           <View style={styles.bottomSlot}>
-            {config?.customBottomBody || <DefaultBodyBottomContent />}
+            {config?.customBottomBody ? config?.customBottomBody : (config?.hideBottomBody ? undefined : <DefaultBodyBottomContent />)}
           </View>
         </View>
       </ScrollView>

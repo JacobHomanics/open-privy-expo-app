@@ -1,5 +1,6 @@
+import DefaultAppLogo from "@open-privy-expo-app/defaults/logos/DefaultAppLogo";
 import type { ReactNode } from "react";
-
+import DefaultAppHeaderCenter from "@open-privy-expo-app/defaults/DefaultAppHeaderCenter";
 export const SHOW_THEME_TOGGLE = true;
 
 export type WelcomeScreenConfig = {
@@ -13,5 +14,6 @@ export type WelcomeScreenConfig = {
 };
 
 export const config: WelcomeScreenConfig = {
-
+    hideHeader: true,
+    customHeader: <DefaultAppHeaderCenter />,
 };
