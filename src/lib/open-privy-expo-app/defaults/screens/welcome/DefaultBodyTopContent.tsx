@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import type { TextStyle } from 'react-native';
 import { Text } from 'react-native';
 
-export default function WelcomeScreenBodyBottomContent() {
+export default function DefaultBodyTopContent() {
   const { theme } = useTheme();
   const tagline = useMemo(() => ({
     fontSize: 18,
@@ -15,7 +15,8 @@ export default function WelcomeScreenBodyBottomContent() {
   }), [theme]) as TextStyle;
   return (
     <>
-      <Text style={tagline}>Welcome to the app!</Text>
+      <Text style={tagline}>Use this app to create a next gen privy enabled app!</Text>
+
     </>
   );
 }

@@ -5,7 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
 import CircularSpinner from '@open-privy-expo-app/components/spinners/CircularSpinner';
-import HPLogo from '../../../components/logos/OpenPrivyExpoAppLogo';
+import HPLogo from '../defaults/logos/DefaultAppLogo';
 import ErrorBottomSheet, { type ErrorBottomSheetRef } from '@open-privy-expo-app/components/bottom-sheets/ErrorBottomSheet';
 import {
   attemptToResolveErrorMessage,

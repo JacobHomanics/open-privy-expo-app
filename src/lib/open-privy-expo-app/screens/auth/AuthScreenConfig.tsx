@@ -1,7 +1,7 @@
-import OpenPrivyExpoAppHeader from "src/components/OpenPrivyExpoAppHeader";
+import DefaultAppHeaderCenter from "@open-privy-expo-app/defaults/DefaultAppHeaderCenter";
 
 export const headerContent = (
-    <OpenPrivyExpoAppHeader />
+    <DefaultAppHeaderCenter />
 );
 
 export const showTitleOnSingleAuthMethod = true;

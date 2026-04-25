@@ -5,10 +5,10 @@ import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootSta
 import { useTheme } from "@open-privy-expo-app/theme";
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
 import { config, SHOW_THEME_TOGGLE } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
-import OpenPrivyExpoAppHeader from 'src/components/OpenPrivyExpoAppHeader';
-import WelcomeScreenBodyTopContent from 'src/components/WelcomeScreenBodyTopContent';
+import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
+import DefaultBodyTopContent from '@open-privy-expo-app/defaults/screens/welcome/DefaultBodyTopContent';
 import { Ionicons } from '@expo/vector-icons';
-import WelcomeScreenBodyBottomContent from 'src/components/WelcomeScreenBodyBottomContent';
+import DefaultBodyBottomContent from '@open-privy-expo-app/defaults/screens/welcome/DefaultBodyBottomContent';
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 import { Text } from 'react-native';
 
@@ -103,7 +103,7 @@ export default function WelcomeScreen({ navigation }: Props) {
   }
 
   return (
-    <AppScreenDefaultLayout navigation={navigation} header={config?.hideHeader ? undefined : <OpenPrivyExpoAppHeader />} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
+    <AppScreenDefaultLayout navigation={navigation} header={config?.hideHeader ? undefined : <DefaultAppHeaderCenter />} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
       <ScrollView
         style={styles.scroll}
         onLayout={(e) => setScrollViewportHeight(e.nativeEvent.layout.height)}
@@ -120,13 +120,13 @@ export default function WelcomeScreen({ navigation }: Props) {
       >
         <View style={[styles.centerColumn, { minHeight: centerColumnMinHeight }]}>
           <View style={styles.topSlot}>
-            {config?.hideTopBody ? undefined : (config?.customTopBody || <WelcomeScreenBodyTopContent />)}
+            {config?.hideTopBody ? undefined : (config?.customTopBody || <DefaultBodyTopContent />)}
           </View>
           <View style={styles.loginRow}>
             {loginButton()}
           </View>
           <View style={styles.bottomSlot}>
-            {config?.customBottomBody || <WelcomeScreenBodyBottomContent />}
+            {config?.customBottomBody || <DefaultBodyBottomContent />}
           </View>
         </View>
       </ScrollView>

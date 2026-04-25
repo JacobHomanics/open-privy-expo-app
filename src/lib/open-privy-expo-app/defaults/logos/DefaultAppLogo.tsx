@@ -1,8 +1,9 @@
 import { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { useTheme } from "@open-privy-expo-app/theme";
+import { appConfig } from "../../configs/app";
 
-export default function OpenPrivyExpoAppLogo() {
+export default function DefaultAppLogo() {
   const { theme } = useTheme();
 
   const styles = useMemo(
@@ -12,7 +13,7 @@ export default function OpenPrivyExpoAppLogo() {
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          marginBottom: 16,
+          marginBottom: 8,
           gap: 2,
           backgroundColor: theme.border,
           width: 64,
@@ -32,7 +33,7 @@ export default function OpenPrivyExpoAppLogo() {
 
   return (
     <View style={styles.logoMark}>
-      <Text style={styles.logoMarkH}>OP</Text>
+      <Text style={styles.logoMarkH}>{appConfig.abbreviation}</Text>
     </View>
   );
 }
