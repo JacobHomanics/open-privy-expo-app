@@ -3,7 +3,7 @@ import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootSta
 import { useState } from 'react';
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
 import { config } from '../../configs/screens/AuthScreen.config';
-import { AuthFormContent } from './components/AuthFormContent';
+import { DefaultAuthFormContent } from '../../defaults/screens/auth/DefaultAuthFormContent';
 import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Auth'>;
@@ -20,7 +20,7 @@ export default function AuthScreen({ navigation }: Props) {
             error={formError}
             onErrorDismiss={() => setFormError(null)}
         >
-            <AuthFormContent
+            <DefaultAuthFormContent
                 navigation={navigation}
                 setFormError={setFormError}
             />

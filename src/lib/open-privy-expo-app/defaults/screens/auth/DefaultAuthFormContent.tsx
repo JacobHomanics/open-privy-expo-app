@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { CommonActions } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme } from "@open-privy-expo-app/theme";
-import PhoneEmailTabs from './PhoneEmailTabs';
+import PhoneEmailTabs from '../../../screens/auth/components/PhoneEmailTabs';
 import SendEmailFormContent from '@open-privy-expo-app/components/features/code-verification/send/SendEmailFormContent';
 import SendPhoneNumberFormContent from '@open-privy-expo-app/components/features/code-verification/send/SendPhoneNumberFormContent';
 import { isValidEmail, isValidUSCanadaPhone } from '../../../utils/validation';
-import { useEmailLoginCodeMutation } from '../hooks/useEmailLoginCodeMutation';
-import { usePhoneNumberMutation } from '../hooks/usePhoneNumberLoginMutation';
-import { useGoogleOAuthLoginMutation } from '../hooks/useGoogleOAuthLoginMutation';
-import { useAppleOAuthLoginMutation } from '../hooks/useAppleOAuthLoginMutation';
-import { useTwitterOAuthLoginMutation } from '../hooks/useTwitterOAuthLoginMutation';
-import { useFarcasterLoginMutation } from '../hooks/useFarcasterLoginMutation';
-import { AuthAppleSignInButton } from './AuthAppleSignInButton';
+import { useEmailLoginCodeMutation } from '../../../screens/auth/hooks/useEmailLoginCodeMutation';
+import { usePhoneNumberMutation } from '../../../screens/auth/hooks/usePhoneNumberLoginMutation';
+import { useGoogleOAuthLoginMutation } from '../../../screens/auth/hooks/useGoogleOAuthLoginMutation';
+import { useAppleOAuthLoginMutation } from '../../../screens/auth/hooks/useAppleOAuthLoginMutation';
+import { useTwitterOAuthLoginMutation } from '../../../screens/auth/hooks/useTwitterOAuthLoginMutation';
+import { useFarcasterLoginMutation } from '../../../screens/auth/hooks/useFarcasterLoginMutation';
+import { AuthAppleSignInButton } from '../../../screens/auth/components/AuthAppleSignInButton';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import FarcasterLogo from '@open-privy-expo-app/components/farcaster-logo';
@@ -21,19 +21,19 @@ import { authProviderFlags } from '../../../configs/authProviders';
 
 type AuthMethod = "phoneNumber" | "email";
 
-type AuthFormContentProps = {
+type DefaultAuthFormContentProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Auth">;
   setFormError: (error: unknown) => void;
   showTitleOnSingleAuthMethod?: boolean;
   title?: string;
 };
 
-export function AuthFormContent({
+export function DefaultAuthFormContent({
   navigation,
   setFormError,
   showTitleOnSingleAuthMethod = true,
   title,
-}: AuthFormContentProps) {
+}: DefaultAuthFormContentProps) {
   const [authMethod, setAuthMethod] = useState<AuthMethod>(
     authProviderFlags.phoneNumber ? "phoneNumber" : "email",
   );
