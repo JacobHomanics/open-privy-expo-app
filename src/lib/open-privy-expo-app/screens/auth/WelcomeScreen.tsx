@@ -1,11 +1,15 @@
 import { useMemo, useState } from 'react';
-import { Platform, StyleSheet, View, Pressable, ScrollView, useWindowDimensions } from 'react-native';
+import { Platform, StyleSheet, View, Pressable, ScrollView, useWindowDimensions, TextStyle } from 'react-native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
-import { headerContent, topBodyContent, bottomBodyContent, loginButtonContent, SHOW_THEME_TOGGLE } from '@open-privy-expo-app/configs/screens/WelcomeScreenConfig';
+import { config, SHOW_THEME_TOGGLE } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
+import OpenPrivyExpoAppHeader from 'src/components/OpenPrivyExpoAppHeader';
+import WelcomeScreenMessageContent from 'src/components/WelcomeScreenContent';
+import { Ionicons } from '@expo/vector-icons';
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
+import { Text } from 'react-native';
 
 export default function WelcomeScreen({ navigation }: Props) {
   const { theme } = useTheme();
@@ -71,19 +75,34 @@ export default function WelcomeScreen({ navigation }: Props) {
   const centerColumnMinHeight =
     scrollViewportHeight > 0 ? scrollViewportHeight : Math.round(windowHeight * 0.5);
 
+  const loginButtonContent = () => {
+    const loginButtonText: TextStyle = {
+      color: theme.primaryContrast,
+      fontSize: 18,
+      fontWeight: '600',
+    };
+
+    return (
+      <>
+        {<Ionicons name="log-in-outline" size={22} color={theme.primaryContrast} />}
+        <Text style={loginButtonText}>{"Login"}</Text>
+      </>
+    );
+  }
+
   const loginButton = () => {
     return (
       <Pressable
         style={({ pressed }) => [styles.loginButton, pressed && { opacity: 0.8 }]}
         onPress={() => navigation.navigate('Auth')}
       >
-        {loginButtonContent()}
+        {config?.loginButton || loginButtonContent()}
       </Pressable>
     )
   }
 
   return (
-    <AppScreenDefaultLayout navigation={navigation} header={headerContent} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
+    <AppScreenDefaultLayout navigation={navigation} header={config?.header || <OpenPrivyExpoAppHeader />} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
       <ScrollView
         style={styles.scroll}
         onLayout={(e) => setScrollViewportHeight(e.nativeEvent.layout.height)}
@@ -100,13 +119,13 @@ export default function WelcomeScreen({ navigation }: Props) {
       >
         <View style={[styles.centerColumn, { minHeight: centerColumnMinHeight }]}>
           <View style={styles.topSlot}>
-            {topBodyContent}
+            {config?.topBody || <WelcomeScreenMessageContent />}
           </View>
           <View style={styles.loginRow}>
             {loginButton()}
           </View>
           <View style={styles.bottomSlot}>
-            {bottomBodyContent}
+            {config?.bottomBody || <WelcomeScreenMessageContent />}
           </View>
         </View>
       </ScrollView>
