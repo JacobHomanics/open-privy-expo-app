@@ -14,7 +14,7 @@ type SendEmailFormContentProps = {
     message?: string;
     sendError?: string;
     buttonLabel?: string;
-    showTitle?: boolean;
+    title?: string;
 };
 
 export default function SendEmailFormContent({
@@ -26,7 +26,7 @@ export default function SendEmailFormContent({
     message,
     sendError,
     buttonLabel,
-    showTitle = true,
+    title,
 }: SendEmailFormContentProps) {
     const { theme } = useTheme();
     const messageStyle = useMemo(
@@ -51,7 +51,7 @@ export default function SendEmailFormContent({
                 canContinue={canContinue}
                 isLoading={isLoading}
                 buttonLabel={buttonLabel}
-                title={showTitle ? "Email" : undefined}
+                title={title}
             >
                 <SendCodeEmailTextInput email={email} onEmailChange={onEmailChange} />
             </SendCodeFormContent>

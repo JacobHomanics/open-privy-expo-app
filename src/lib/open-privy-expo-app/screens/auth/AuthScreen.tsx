@@ -20,10 +20,10 @@ export default function AuthScreen({ navigation }: Props) {
             error={formError}
             onErrorDismiss={() => setFormError(null)}
         >
-            <DefaultAuthFormContent
+            {config?.customAuthFormContent ? config?.customAuthFormContent : (<DefaultAuthFormContent
                 navigation={navigation}
                 setFormError={setFormError}
-            />
+            />)}
         </AppScreenDefaultLayout>
     );
 }

@@ -24,15 +24,11 @@ type AuthMethod = "phoneNumber" | "email";
 type DefaultAuthFormContentProps = {
   navigation: NativeStackNavigationProp<RootStackParamList, "Auth">;
   setFormError: (error: unknown) => void;
-  showTitleOnSingleAuthMethod?: boolean;
-  title?: string;
 };
 
 export function DefaultAuthFormContent({
   navigation,
   setFormError,
-  showTitleOnSingleAuthMethod = true,
-  title,
 }: DefaultAuthFormContentProps) {
   const [authMethod, setAuthMethod] = useState<AuthMethod>(
     authProviderFlags.phoneNumber ? "phoneNumber" : "email",
@@ -162,13 +158,13 @@ export function DefaultAuthFormContent({
   );
   return (
     <>
-      {title && <Text style={styles.titleText}>{title}</Text>}
+      {<Text style={styles.titleText}>{"Create Account / Sign in"}</Text>}
       {phoneEnabled && emailEnabled && (
         <PhoneEmailTabs value={authMethod} onChange={setAuthMethod} />
       )}
       {emailEnabled && authMethod === "email" ? (
         <SendEmailFormContent
-          showTitle={!phoneEnabled && showTitleOnSingleAuthMethod}
+          title={!phoneEnabled ? "Email" : undefined}
           email={email}
           onEmailChange={setEmail}
           onSendCode={() => emailMutation.mutate()}
@@ -178,7 +174,7 @@ export function DefaultAuthFormContent({
       ) : phoneEnabled ? (
         <SendPhoneNumberFormContent
           phoneNumber={phoneNumber}
-          showTitle={!emailEnabled && showTitleOnSingleAuthMethod}
+          title={!emailEnabled ? "Phone Number" : undefined}
           onPhoneNumberChange={setPhoneNumber}
           onSendCode={() => phoneNumberMutation.mutate()}
           canContinue={isValidUSCanadaPhone(phoneNumber)}

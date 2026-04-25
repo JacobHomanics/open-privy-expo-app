@@ -11,10 +11,10 @@ type SendPhoneNumberFormContentProps = {
     onSendCode: () => void;
     canContinue: boolean;
     isLoading: boolean;
+    title?: string;
     message?: string;
     sendError?: string;
     buttonLabel?: string;
-    showTitle?: boolean;
 };
 
 export default function SendPhoneNumberFormContent({
@@ -23,10 +23,10 @@ export default function SendPhoneNumberFormContent({
     onSendCode,
     canContinue,
     isLoading,
+    title,
     message,
     sendError,
     buttonLabel,
-    showTitle = true,
 }: SendPhoneNumberFormContentProps) {
     const { theme } = useTheme();
     const messageStyle = useMemo(
@@ -47,7 +47,7 @@ export default function SendPhoneNumberFormContent({
             {message ? <Text style={messageStyle.text}>{message}</Text> : null}
             {sendError ? <ErrorCallout error={sendError} /> : null}
             <SendCodeFormContent
-                title={showTitle ? "Phone Number" : undefined}
+                title={title}
                 onSendCode={onSendCode}
                 canContinue={canContinue}
                 isLoading={isLoading}

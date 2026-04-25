@@ -1,6 +1,6 @@
 export const authProviderFlags = {
   phoneNumber: true,
-  email: true,
+  email: false,
   google: true,
   apple: true,
   twitter: true,
