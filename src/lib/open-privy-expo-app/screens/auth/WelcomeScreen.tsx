@@ -4,7 +4,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
-import { headerContent, topBodyContent, bottomBodyContent, loginButtonContent, SHOW_THEME_TOGGLE } from './WelcomeScreenConfig';
+import { headerContent, topBodyContent, bottomBodyContent, loginButtonContent, SHOW_THEME_TOGGLE } from '@open-privy-expo-app/configs/screens/WelcomeScreenConfig';
 type Props = NativeStackScreenProps<RootStackParamList, 'Welcome'>;
 
 export default function WelcomeScreen({ navigation }: Props) {
