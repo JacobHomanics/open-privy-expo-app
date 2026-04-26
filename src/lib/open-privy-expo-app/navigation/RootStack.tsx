@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SplashScreen from '@open-privy-expo-app/screens/SplashScreen';
+import SplashScreen from '@open-privy-expo-app/screens/splash/SplashScreen';
 import WelcomeScreen from '@open-privy-expo-app/screens/auth/WelcomeScreen';
 import AuthScreen from '@open-privy-expo-app/screens/auth/AuthScreen';
 import VerifyAuthCodeEmailScreen from '@open-privy-expo-app/screens/auth/screens/VerifyAuthCodeEmailScreen';
