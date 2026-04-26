@@ -5,9 +5,11 @@ import {
     GENERIC_ERROR_MESSAGE,
 } from '@open-privy-expo-app/utils/Error Messages/errorMessages';
 import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName';
+import useSplashErrorMessage from './useSplashErrorMessage';
 
-export default function DefaultSplashScreenContent({ errorMessage }: { errorMessage: string | null }) {
+export default function DefaultSplashScreenContent() {
     const errorBottomSheetRef = useRef<ErrorBottomSheetRef>(null);
+    const errorMessage = useSplashErrorMessage();
 
     useEffect(() => {
         if (errorMessage != null) {
