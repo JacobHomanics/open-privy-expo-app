@@ -25,14 +25,11 @@ export default function SendCodeFormContent({
     const styles = useMemo(
         () =>
             StyleSheet.create({
-                footerSticky: {
-                    position: 'absolute',
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                },
                 inputSection: {
                     marginHorizontal: 24,
+                    marginTop: 24,
+                },
+                footerContainer: {
                     marginTop: 24,
                 },
                 titleText: {
@@ -50,7 +47,7 @@ export default function SendCodeFormContent({
         <>
             {title && <Text style={styles.titleText}>{title}</Text>}
             <View style={styles.inputSection}>{children}</View>
-            <View style={styles.footerSticky}>
+            <View style={styles.footerContainer}>
                 <SendCodeFooter
                     label={buttonLabel}
                     onPress={onSendCode}

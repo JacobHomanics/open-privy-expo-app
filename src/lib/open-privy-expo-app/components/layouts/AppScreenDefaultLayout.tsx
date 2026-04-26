@@ -5,6 +5,7 @@ import {
     KeyboardAvoidingView,
     Platform,
     ViewStyle,
+    ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -70,14 +71,17 @@ export default function AppScreenDefaultLayout({
                     justifyContent: 'center',
                     alignItems: 'center',
                 },
+                contentCenterStretch: {
+                    justifyContent: 'flex-start',
+                    paddingTop: 0,
+                },
                 centerBlock: { width: '100%', maxWidth: 400 },
                 centerBlockStretch: { flex: 1, minHeight: 0 },
                 screenContent: { flex: 1, minHeight: 0 },
+                screenContentContainer: { flexGrow: 1 },
                 formSection: {
-                    flex: 1,
-                    minHeight: 0,
-                    justifyContent: 'center',
-                    paddingBottom: 80,
+                    paddingTop: 24,
+                    paddingBottom: 24,
                 },
             }),
         [theme]
@@ -92,7 +96,7 @@ export default function AppScreenDefaultLayout({
         <View style={styles.screen}>
             <SafeAreaView style={styles.flex1}>
                 <KeyboardAvoidingView
-                    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+                    behavior={Platform.OS === 'ios' && !stretchContent ? 'padding' : undefined}
                     style={styles.flex1}
                 >
                     <View style={styles.flex1}>
@@ -107,16 +111,28 @@ export default function AppScreenDefaultLayout({
                             <View
                                 style={[
                                     styles.contentCenter,
+                                    stretchContent && styles.contentCenterStretch,
                                     contentStyle,
                                 ]}
                             >
                                 <View style={[styles.centerBlock, stretchContent && styles.centerBlockStretch]}>
                                     {stretchContent ? (
-                                        <View style={styles.screenContent}>
+                                        <ScrollView
+                                            style={styles.screenContent}
+                                            contentContainerStyle={[
+                                                styles.screenContentContainer,
+                                                Platform.OS === 'ios' && stretchContent && { paddingBottom: 48 },
+                                            ]}
+                                            keyboardShouldPersistTaps="handled"
+                                            keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+                                            automaticallyAdjustKeyboardInsets={Platform.OS === 'ios'}
+                                            contentInsetAdjustmentBehavior="always"
+                                            showsVerticalScrollIndicator={false}
+                                        >
                                             <View style={styles.formSection}>
                                                 {children}
                                             </View>
-                                        </View>
+                                        </ScrollView>
                                     ) : (
                                         children
                                     )}
