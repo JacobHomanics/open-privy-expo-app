@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { useEffect, useMemo, useState } from 'react';
+import { Keyboard, Platform, StyleSheet, View } from 'react-native';
 import PrimaryButton from '@open-privy-expo-app/components/buttons/PrimaryButton';
 import CircularSpinner from '@open-privy-expo-app/components/spinners/CircularSpinner';
 
@@ -16,12 +16,31 @@ export default function SendCodeFooter({
     disabled = false,
     loading = false,
 }: Props) {
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+    useEffect(() => {
+        const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+        const hideEvent = Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide';
+
+        const onShow = Keyboard.addListener(showEvent, (event) => {
+            setKeyboardHeight(event.endCoordinates?.height ?? 0);
+        });
+        const onHide = Keyboard.addListener(hideEvent, () => {
+            setKeyboardHeight(0);
+        });
+
+        return () => {
+            onShow.remove();
+            onHide.remove();
+        };
+    }, []);
+
     const styles = useMemo(
         () =>
             StyleSheet.create({
                 container: {
                     paddingHorizontal: 24,
-                    paddingBottom: 8,
+                    paddingBottom: 8 + keyboardHeight,
                 },
                 spinnerContainer: {
                     alignItems: 'center',
@@ -30,7 +49,7 @@ export default function SendCodeFooter({
                     paddingTop: 8,
                 },
             }),
-        []
+        [keyboardHeight]
     );
 
     const isDisabled = disabled || loading;

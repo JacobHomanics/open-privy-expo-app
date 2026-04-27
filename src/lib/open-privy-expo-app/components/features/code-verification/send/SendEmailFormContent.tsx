@@ -13,14 +13,14 @@ import { useState } from 'react';
 
 type SendEmailFormContentProps = {
     message?: string;
-    sendError?: string;
+    onError?: (error: unknown) => void;
     buttonLabel?: string;
     title?: string;
 };
 
 export default function SendEmailFormContent({
     message,
-    sendError,
+    onError,
     buttonLabel,
     title,
 }: SendEmailFormContentProps) {
@@ -46,13 +46,13 @@ export default function SendEmailFormContent({
         email,
         onSuccess: () =>
             navigation.navigate("VerifyAuthCodeEmail", { value: email.trim() }),
-        // onError: (error) => setFormError(error),
+        onError: (error) => onError?.(error),
     });
 
     return (
         <>
             {message ? <Text style={messageStyle.text}>{message}</Text> : null}
-            {sendError ? <ErrorCallout error={sendError} /> : null}
+            {/* {sendError ? <ErrorCallout error={sendError} /> : null} */}
             <SendCodeFormContent
                 onSendCode={emailMutation.mutate}
                 canContinue={isValidEmail(email)}

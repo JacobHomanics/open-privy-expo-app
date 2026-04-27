@@ -14,14 +14,14 @@ import { useState } from 'react';
 type SendPhoneNumberFormContentProps = {
     title?: string;
     message?: string;
-    sendError?: string;
+    onError?: (error: unknown) => void;
     buttonLabel?: string;
 };
 
 export default function SendPhoneNumberFormContent({
     title,
     message,
-    sendError,
+    onError,
     buttonLabel,
 }: SendPhoneNumberFormContentProps) {
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -45,12 +45,12 @@ export default function SendPhoneNumberFormContent({
         phoneNumber,
         onSuccess: () =>
             navigation.navigate("VerifyAuthCodePhoneNumber", { value: phoneNumber.trim() }),
-        // onError: (error) => setFormError(error),
+        onError: (error) => onError?.(error),
     });
     return (
         <>
             {message ? <Text style={messageStyle.text}>{message}</Text> : null}
-            {sendError ? <ErrorCallout error={sendError} /> : null}
+            {/* {onError ? <ErrorCallout error={onError as string} /> : null} */}
             <SendCodeFormContent
                 title={title}
                 onSendCode={phoneNumberMutation.mutate}

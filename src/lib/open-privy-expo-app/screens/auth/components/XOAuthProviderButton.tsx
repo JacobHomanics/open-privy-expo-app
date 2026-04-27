@@ -8,11 +8,11 @@ import { OAuthProviderButton } from './OAuthProviderButton';
 import { useNavigation } from '@react-navigation/native';
 
 type XOAuthProviderButtonProps = {
-    setFormError: (error: unknown) => void;
+    onError: (error: unknown) => void;
     stacked?: boolean;
 };
 
-export function XOAuthProviderButton({ setFormError }: XOAuthProviderButtonProps) {
+export function XOAuthProviderButton({ onError }: XOAuthProviderButtonProps) {
     const { theme } = useTheme();
     const mutation = useTwitterOAuthLoginMutation({});
 
@@ -20,7 +20,7 @@ export function XOAuthProviderButton({ setFormError }: XOAuthProviderButtonProps
         <OAuthProviderButton
             label="Continue with X"
             mutation={mutation}
-            onError={(err) => setFormError(err)}
+            onError={(err) => onError(err)}
             icon={<Ionicons name="logo-twitter" size={22} color={theme.text} />}
         />
     );

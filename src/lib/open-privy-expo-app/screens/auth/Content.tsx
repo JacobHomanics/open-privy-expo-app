@@ -24,7 +24,7 @@ const customPhoneNumberContent = config?.content?.customPhoneNumberContent;
 const hasCodeBasedAuth = customEmailContent !== null || customPhoneNumberContent !== null;
 const hasOauthAuth = config?.content?.oAuth?.apple !== null || config?.content?.oAuth?.google !== null || config?.content?.oAuth?.twitter !== null || config?.content?.oAuth?.farcaster !== null;
 
-export default function Content() {
+export default function Content({ setFormError }: { setFormError: (error: unknown) => void }) {
     const { theme } = useTheme();
 
     const bodyTopContent = config?.content?.customBodyTopContent ?? <View>
@@ -34,26 +34,26 @@ export default function Content() {
     return (
         <View style={{ gap: 16 }}>
             {bodyTopContent}
-            <OauthContent />
+            <OauthContent setFormError={setFormError} />
             <DividerContent />
-            <PhoneEmailTabsContent />
+            <PhoneEmailTabsContent setFormError={setFormError} />
         </View>
     );
 }
 
-const OauthContent = () => {
+const OauthContent = ({ setFormError }: { setFormError: (error: unknown) => void }) => {
     const { mode } = useTheme();
     return (
         <View style={{ gap: 12 }}>
-            <AuthAppleSignInButton setFormError={() => { }} mode={mode} />
-            <GoogleOAuthProviderButton setFormError={() => { }} />
-            <XOAuthProviderButton setFormError={() => { }} />
-            <FarcasterOAuthProviderButton setFormError={() => { }} />
+            <AuthAppleSignInButton setFormError={setFormError} mode={mode} />
+            <GoogleOAuthProviderButton onError={setFormError} />
+            <XOAuthProviderButton onError={setFormError} />
+            <FarcasterOAuthProviderButton onError={setFormError} />
         </View>
     );
 }
 
-const PhoneEmailTabsContent = () => {
+const PhoneEmailTabsContent = ({ setFormError }: { setFormError: (error: unknown) => void }) => {
     const [authMethod, setAuthMethod] = useState<AuthMethod>(
         "phoneNumber"
     );
@@ -63,15 +63,15 @@ const PhoneEmailTabsContent = () => {
             {customEmailContent !== null && customPhoneNumberContent !== null && (
                 <>
                     <PhoneEmailTabs value={authMethod} onChange={setAuthMethod} />
-                    {authMethod === "email" ? <SendEmailFormContent /> : <SendPhoneNumberFormContent />}
+                    {authMethod === "email" ? <SendEmailFormContent onError={setFormError} /> : <SendPhoneNumberFormContent onError={setFormError} />}
                 </>
             )}
 
             {customEmailContent !== null && customPhoneNumberContent === null && (
-                <SendEmailFormContent title="Email" />
+                <SendEmailFormContent title="Email" onError={setFormError} />
             )}
             {customEmailContent === null && customPhoneNumberContent !== null && (
-                <SendPhoneNumberFormContent title="Phone Number" />
+                <SendPhoneNumberFormContent title="Phone Number" onError={setFormError} />
             )}
         </>
     );

@@ -50,8 +50,9 @@ export function AuthAppleSignInButton({
                     pointerEvents={oauthBusy ? 'none' : 'auto'}
                 >
                     <AppleAuthenticationButton
+
                         key={mode}
-                        buttonType={AppleAuthenticationButtonType.SIGN_IN}
+                        buttonType={AppleAuthenticationButtonType.CONTINUE}
                         buttonStyle={
                             mode === 'dark'
                                 ? AppleAuthenticationButtonStyle.WHITE

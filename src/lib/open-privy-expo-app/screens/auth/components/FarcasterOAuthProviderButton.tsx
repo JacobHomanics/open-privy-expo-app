@@ -7,17 +7,17 @@ import { OAuthProviderButton } from './OAuthProviderButton';
 import { useNavigation } from '@react-navigation/native';
 
 type FarcasterOAuthProviderButtonProps = {
-    setFormError: (error: unknown) => void;
+    onError: (error: unknown) => void;
 };
 
-export function FarcasterOAuthProviderButton({ setFormError }: FarcasterOAuthProviderButtonProps) {
+export function FarcasterOAuthProviderButton({ onError }: FarcasterOAuthProviderButtonProps) {
     const mutation = useFarcasterLoginMutation({});
 
     return (
         <OAuthProviderButton
             label="Continue with Farcaster"
             mutation={mutation}
-            onError={(err) => setFormError(err)}
+            onError={(err) => onError(err)}
             icon={<FarcasterLogo />}
         />
     );

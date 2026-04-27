@@ -8,11 +8,11 @@ import { OAuthProviderButton } from './OAuthProviderButton';
 import { useNavigation } from '@react-navigation/native';
 
 type GoogleOAuthProviderButtonProps = {
-    setFormError: (error: unknown) => void;
+    onError: (error: unknown) => void;
     stacked?: boolean;
 };
 
-export function GoogleOAuthProviderButton({ setFormError }: GoogleOAuthProviderButtonProps) {
+export function GoogleOAuthProviderButton({ onError }: GoogleOAuthProviderButtonProps) {
     const { theme } = useTheme();
     const mutation = useGoogleOAuthLoginMutation({});
 
@@ -20,7 +20,7 @@ export function GoogleOAuthProviderButton({ setFormError }: GoogleOAuthProviderB
         <OAuthProviderButton
             label="Continue with Google"
             mutation={mutation}
-            onError={(err) => setFormError(err)}
+            onError={(err) => onError(err)}
             icon={<Ionicons name="logo-google" size={22} color={theme.text} />}
         />
     );
