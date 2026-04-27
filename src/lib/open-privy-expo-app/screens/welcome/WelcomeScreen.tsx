@@ -47,7 +47,38 @@ export default function WelcomeScreen({ navigation }: Props) {
       flex: 1,
       width: '100%',
       alignItems: 'center',
-      // justifyContent: 'center',
+      justifyContent: 'center',
+    },
+    loginButton: {
+      flexDirection: 'row',
+      backgroundColor: theme.primary,
+      paddingVertical: 14,
+      paddingHorizontal: 32,
+      borderRadius: 10,
+      minWidth: 200,
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 10,
+    },
+    loginButtonText: {
+      color: theme.primaryContrast,
+      fontSize: 18,
+      fontWeight: '600',
+    },
+    welcomeText: {
+      fontSize: 18,
+      fontWeight: '600',
+      color: theme.text,
+      textAlign: 'center',
+      marginBottom: 16,
+    },
+    welcomeTextSecondary: {
+      fontSize: 18,
+      color: theme.textSecondary,
+      textAlign: 'center',
+      marginTop: 8,
+      maxWidth: 280,
+      alignSelf: 'center',
     },
   }), [theme]);
 
@@ -105,16 +136,18 @@ export default function WelcomeScreen({ navigation }: Props) {
     scrollViewportHeight > 0 ? scrollViewportHeight : Math.round(windowHeight * 0.5);
 
   const loginButtonContent = () => {
-    const loginButtonText: TextStyle = {
-      color: theme.primaryContrast,
-      fontSize: 18,
-      fontWeight: '600',
-    };
+    const styles = useMemo(() => StyleSheet.create({
+      loginButtonText: {
+        color: theme.primaryContrast,
+        fontSize: 18,
+        fontWeight: '600',
+      },
+    }), [theme]);
 
     return (
       <>
         {<Ionicons name="log-in-outline" size={22} color={theme.primaryContrast} />}
-        <Text style={loginButtonText}>{"Login"}</Text>
+        <Text style={styles.loginButtonText}>{"Login"}</Text>
       </>
     );
   }
@@ -135,11 +168,19 @@ export default function WelcomeScreen({ navigation }: Props) {
       <SafeAreaView style={styles.safeArea}>
         <DefaultAppWelcomeScreenHeader />
         <View style={styles.content}>
-          <Text>Welcome</Text>
+          <Text style={styles.welcomeText}>Welcome to the app</Text>
+          <Pressable
+            style={({ pressed }) => [styles.loginButton, pressed && { opacity: 0.8 }]}
+            onPress={() => navigation.navigate('Auth')}
+          >
+            {loginButtonContent()}
+          </Pressable>
+          <Text style={styles.welcomeTextSecondary}>Use this app to create a next gen Privy enabled app!</Text>
         </View>
 
       </SafeAreaView>
     </View>
+
     // <Text>Welcome</Text>
     // <AppScreenDefaultLayout navigation={navigation} header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeaderCenter />)} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
     //   <ScrollView

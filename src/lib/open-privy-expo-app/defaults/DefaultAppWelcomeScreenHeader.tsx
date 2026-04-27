@@ -6,11 +6,11 @@ import AppCloseButton from '@open-privy-expo-app/components/app-buttons/close/Ap
 import ThreeSlotRow from './ThreeSlotRow';
 
 const defaultContent = {
-    left: config?.header?.left?.customBackButton ?? <AppBackButton />,
+    left: config?.header?.left?.customBackButton ?? <></>,
     center: config?.header?.center?.customContent ?? <DefaultAppTextLogoAndName customLogo={config?.header?.center?.customLogo} customName={config?.header?.center?.customName} />,
     right: <>
         {config?.header?.right?.customToggleButton ?? <AppToggleButton />}
-        {config?.header?.right?.customCloseButton ?? <AppCloseButton />}
+        {config?.header?.right?.customCloseButton ?? <></>}
     </>
 }
 
