@@ -13,6 +13,8 @@ import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/Def
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
 import DefaultAppWelcomeScreenHeader from '@open-privy-expo-app/defaults/DefaultAppWelcomeScreenHeader';
+import LoginButton from '@open-privy-expo-app/components/app-buttons/login/LoginButton';
+import WelcomeScreenContent from './WelcomeScreenContent';
 
 export default function WelcomeScreen({ navigation }: Props) {
   const { theme } = useTheme();
@@ -48,22 +50,6 @@ export default function WelcomeScreen({ navigation }: Props) {
       width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-    loginButton: {
-      flexDirection: 'row',
-      backgroundColor: theme.primary,
-      paddingVertical: 14,
-      paddingHorizontal: 32,
-      borderRadius: 10,
-      minWidth: 200,
-      alignItems: 'center',
-      justifyContent: 'center',
-      gap: 10,
-    },
-    loginButtonText: {
-      color: theme.primaryContrast,
-      fontSize: 18,
-      fontWeight: '600',
     },
     welcomeText: {
       fontSize: 18,
@@ -135,22 +121,22 @@ export default function WelcomeScreen({ navigation }: Props) {
   const centerColumnMinHeight =
     scrollViewportHeight > 0 ? scrollViewportHeight : Math.round(windowHeight * 0.5);
 
-  const loginButtonContent = () => {
-    const styles = useMemo(() => StyleSheet.create({
-      loginButtonText: {
-        color: theme.primaryContrast,
-        fontSize: 18,
-        fontWeight: '600',
-      },
-    }), [theme]);
+  // const loginButtonContent = () => {
+  //   const styles = useMemo(() => StyleSheet.create({
+  //     loginButtonText: {
+  //       color: theme.primaryContrast,
+  //       fontSize: 18,
+  //       fontWeight: '600',
+  //     },
+  //   }), [theme]);
 
-    return (
-      <>
-        {<Ionicons name="log-in-outline" size={22} color={theme.primaryContrast} />}
-        <Text style={styles.loginButtonText}>{"Login"}</Text>
-      </>
-    );
-  }
+  //   return (
+  //     <>
+  //       {<Ionicons name="log-in-outline" size={22} color={theme.primaryContrast} />}
+  //       <Text style={styles.loginButtonText}>{"Login"}</Text>
+  //     </>
+  //   );
+  // }
 
   // const loginButton = () => {
   //   return (
@@ -167,16 +153,12 @@ export default function WelcomeScreen({ navigation }: Props) {
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
         <DefaultAppWelcomeScreenHeader />
-        <View style={styles.content}>
+        <WelcomeScreenContent />
+        {/* <View style={styles.content}>
           <Text style={styles.welcomeText}>Welcome to the app</Text>
-          <Pressable
-            style={({ pressed }) => [styles.loginButton, pressed && { opacity: 0.8 }]}
-            onPress={() => navigation.navigate('Auth')}
-          >
-            {loginButtonContent()}
-          </Pressable>
+          <LoginButton />
           <Text style={styles.welcomeTextSecondary}>Use this app to create a next gen Privy enabled app!</Text>
-        </View>
+        </View> */}
 
       </SafeAreaView>
     </View>
