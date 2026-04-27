@@ -4,7 +4,6 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
-import { config, SHOW_THEME_TOGGLE } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
 import DefaultBodyTopContent from '@open-privy-expo-app/defaults/screens/welcome/DefaultBodyTopContent';
 import { Ionicons } from '@expo/vector-icons';
 import DefaultBodyBottomContent from '@open-privy-expo-app/defaults/screens/welcome/DefaultBodyBottomContent';
@@ -13,6 +12,7 @@ import { Text } from 'react-native';
 import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
+import DefaultAppWelcomeScreenHeader from '@open-privy-expo-app/defaults/DefaultAppWelcomeScreenHeader';
 
 export default function WelcomeScreen({ navigation }: Props) {
   const { theme } = useTheme();
@@ -133,8 +133,7 @@ export default function WelcomeScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-        <DefaultAppHeader />
-
+        <DefaultAppWelcomeScreenHeader />
         <View style={styles.content}>
           <Text>Welcome</Text>
         </View>

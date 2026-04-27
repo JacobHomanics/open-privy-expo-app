@@ -1,8 +1,9 @@
 import { StyleSheet, View } from 'react-native';
 import DefaultAppTextLogo from './DefaultAppTextLogo';
 import DefaultAppTextName from './DefaultAppTextName';
+import type { ReactNode } from 'react';
 
-export default function DefaultAppTextLogoAndName() {
+export default function DefaultAppTextLogoAndName({ customLogo, customName }: { customLogo?: ReactNode, customName?: ReactNode }) {
     const styles = StyleSheet.create({
         container: {
             alignItems: 'center',
@@ -13,8 +14,8 @@ export default function DefaultAppTextLogoAndName() {
 
     return (
         <View style={styles.container}>
-            <DefaultAppTextLogo />
-            <DefaultAppTextName />
+            {customLogo ?? <DefaultAppTextLogo />}
+            {customName ?? <DefaultAppTextName />}
         </View>
     );
 }

@@ -1,14 +1,16 @@
-import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName';
-import AppThemeToggleButton from '@open-privy-expo-app/components/AppThemeToggleButton';
-import DefaultAppBackButton from '@open-privy-expo-app/components/DefaultAppBackButton';
-import ThreeSlotRow from './ThreeSlotRow';
-import { welcomeScreenHeaderConfig } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
+import { config } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
+import AppHeader from './AppHeader';
 export default function DefaultAppWelcomeScreenHeader() {
     return (
-        <ThreeSlotRow
-            left={welcomeScreenHeaderConfig?.left ?? <DefaultAppBackButton />}
-            center={welcomeScreenHeaderConfig?.center ?? <DefaultAppTextLogoAndName />}
-            right={welcomeScreenHeaderConfig?.right ?? <AppThemeToggleButton />}
+        <AppHeader
+            customLeftContent={config?.header?.left?.customContent}
+            customCenterContent={config?.header?.center?.customContent}
+            customRightContent={config?.header?.right?.customContent}
+            customToggleButton={config?.header?.right?.customToggleButton}
+            customCloseButton={config?.header?.right?.customCloseButton}
+            customLogo={config?.header?.center?.customLogo}
+            customName={config?.header?.center?.customName}
+            customBackButton={config?.header?.left?.customBackButton}
         />
     );
 }

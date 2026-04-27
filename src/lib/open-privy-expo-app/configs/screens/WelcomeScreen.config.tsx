@@ -1,26 +1,28 @@
-import AppThemeToggleButton from "@open-privy-expo-app/components/AppThemeToggleButton";
-import DefaultAppBackButton from "@open-privy-expo-app/components/DefaultAppBackButton";
-import DefaultAppTextLogoAndName from "@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName";
-import type { headerConfig } from "./types/headerConfig";
+import type { HeaderConfig } from "./types/HeaderConfig";
 import type { ReactNode } from "react";
-export const SHOW_THEME_TOGGLE = true;
+import { Text } from "react-native";
 
 export type WelcomeScreenConfig = {
-    hideHeader?: boolean;
-    customHeader?: ReactNode;
-    hideTopBody?: boolean;
-    customTopBody?: ReactNode;
-    hideBottomBody?: boolean;
-    customBottomBody?: ReactNode;
-    customLoginButton?: ReactNode;
+    header?: HeaderConfig;
 };
 
 export const config: WelcomeScreenConfig = {
-
-};
-
-export const welcomeScreenHeaderConfig: headerConfig = {
-    // left: <></>,
-    // center: <><DefaultAppTextLogoAndName /><DefaultAppTextLogoAndName /></>,
-    // right: <><AppThemeToggleButton /><AppThemeToggleButton /><AppThemeToggleButton /></>,
+    header: {
+        // left: <></>,
+        // center: <><DefaultAppTextLogoAndName /><DefaultAppTextLogoAndName /></>,
+        left: {
+            // customContent: <Text>Piece 3</Text>,
+            // customBackButton: <Text>Piece 2</Text>,
+        },
+        center: {
+            // customContent: <Text>Piece 3</Text>,
+            // customLogo: <Text>Piece 1</Text>,
+            // customName: <Text>Piece 2</Text>
+        },
+        right: {
+            // customContent: <Text>Hello</Text>,
+            // customToggleButton: <></>,
+            // customCloseButton: <></>
+        },
+    }
 };
