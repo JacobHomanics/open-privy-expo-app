@@ -3,6 +3,8 @@ import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootSta
 import { useCallback } from 'react';
 import VerifyLoginCodeContent from '@open-privy-expo-app/components/features/code-verification/verify/VerifyLoginCodeContent';
 import { useAuthFlow } from '@open-privy-expo-app/context/AuthFlowContext';
+import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
+import Header from './Header';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'VerifyAuthCodeEmail'>;
 
@@ -22,12 +24,15 @@ export default function VerifyAuthCodeEmailScreen({ route, navigation }: Props) 
     );
 
     return (
-        <VerifyLoginCodeContent
-            value={value}
-            sendCode={sendCode}
-            submitCode={submitCode}
-            onClosePress={() => navigation.goBack()}
-            navigation={navigation}
-        />
+        <AppScreenContainer>
+            <Header />
+            <VerifyLoginCodeContent
+                value={value}
+                sendCode={sendCode}
+                submitCode={submitCode}
+                onClosePress={() => navigation.goBack()}
+                navigation={navigation}
+            />
+        </AppScreenContainer>
     );
 }

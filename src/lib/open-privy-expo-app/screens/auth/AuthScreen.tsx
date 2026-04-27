@@ -92,18 +92,5 @@ export default function AuthScreen({ navigation }: Props) {
                 onDismiss={() => setFormError("")}
             />
         </AppScreenContainer>
-        // <AppScreenDefaultLayout
-        //     navigation={navigation}
-        //     header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeader />)}
-        //     stretchContent
-        //     onBackPress={() => navigation.goBack()}
-        //     error={formError}
-        //     onErrorDismiss={() => setFormError(null)}
-        // >
-        //     {config?.customAuthFormContent ? config?.customAuthFormContent : (<DefaultAuthFormContent
-        //         navigation={navigation}
-        //         setFormError={setFormError}
-        //     />)}
-        // </AppScreenDefaultLayout>
     );
 }

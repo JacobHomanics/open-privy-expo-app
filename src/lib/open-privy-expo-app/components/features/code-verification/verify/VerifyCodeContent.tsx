@@ -1,5 +1,5 @@
 import { useMemo, useEffect, useState, useRef } from 'react';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
 import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
@@ -11,6 +11,8 @@ import { useVerifyCodeInput } from '@open-privy-expo-app/hooks/code-verification
 import { useVerifyCodeMutation } from '@open-privy-expo-app/hooks/code-verification/verify/useVerifyCodeMutation';
 import { useResendCode } from '@open-privy-expo-app/hooks/code-verification/verify/useResendCode';
 import LoadingModal from '@open-privy-expo-app/components/modals/LoadingModal';
+import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
+import Content from '@open-privy-expo-app/screens/welcome/Content';
 
 export type VerifyCodeContentProps = {
     value: string;
@@ -121,20 +123,19 @@ export default function VerifyCodeContent({
                     color: '#dc2626',
                     marginTop: 16,
                 },
+                contentContainer: {
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginBottom: 200,
+                },
             }),
         [theme]
     );
 
     return (
         <>
-            <AppScreenDefaultLayout
-                navigation={navigation}
-                header={<DefaultAppHeader />}
-                onBackPress={onBackPress}
-                onClosePress={onClosePress}
-                error={formError}
-                onErrorDismiss={() => setFormError(null)}
-            >
+            <View style={styles.contentContainer}>
                 <Text style={styles.titleText}>Verification code</Text>
                 <DescriptionText value={value} />
                 <CodeDigitInputs
@@ -153,11 +154,43 @@ export default function VerifyCodeContent({
                     }
                     cooldownSeconds={resendCooldown}
                 />
-            </AppScreenDefaultLayout>
+            </View>
             <LoadingModal visible={verifyMutation.isPending}>
                 {"Verifying code..."}
             </LoadingModal>
-
         </>
+        // <>
+        //     <AppScreenDefaultLayout
+        //         navigation={navigation}
+        //         header={<DefaultAppHeader />}
+        //         onBackPress={onBackPress}
+        //         onClosePress={onClosePress}
+        //         error={formError}
+        //         onErrorDismiss={() => setFormError(null)}
+        //     >
+        //         <Text style={styles.titleText}>Verification code</Text>
+        //         <DescriptionText value={value} />
+        //         <CodeDigitInputs
+        //             codeDigits={codeInput.codeDigits}
+        //             codeInputRefs={codeInput.codeInputRefs}
+        //             onDigitChange={codeInput.handleCodeDigitChange}
+        //             onKeyPress={codeInput.handleCodeKeyPress}
+        //             editable={!verifyMutation.isPending}
+        //         />
+        //         <ResendCodeButton
+        //             onPress={() => resendCodeMutation.mutate()}
+        //             disabled={
+        //                 resendCooldown > 0 ||
+        //                 verifyMutation.isPending ||
+        //                 resendCodeMutation.isPending
+        //             }
+        //             cooldownSeconds={resendCooldown}
+        //         />
+        //     </AppScreenDefaultLayout>
+        //     <LoadingModal visible={verifyMutation.isPending}>
+        //         {"Verifying code..."}
+        //     </LoadingModal>
+
+        // </>
     );
 }
