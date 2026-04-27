@@ -1,13 +1,15 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
-import { Text } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View } from 'react-native';
 // import { useState } from 'react';
 // import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
 // import { config } from '../../configs/screens/AuthScreen.config';
 // import { DefaultAuthFormContent } from '../../defaults/screens/auth/DefaultAuthFormContent';
 // import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
 // import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
+import Header from './Header';
+import Content from './Content';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Auth'>;
 
@@ -16,7 +18,17 @@ export default function AuthScreen({ navigation }: Props) {
 
     return (
         <AppScreenContainer>
-            <Text>AuthScreen</Text>
+            <Header />
+            <KeyboardAvoidingView
+                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                style={{ flex: 1 }}
+            >
+                <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                        <Content />
+                    </View>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
         </AppScreenContainer>
         // <AppScreenDefaultLayout
         //     navigation={navigation}
