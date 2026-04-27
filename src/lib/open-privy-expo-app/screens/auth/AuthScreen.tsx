@@ -4,7 +4,8 @@ import { useState } from 'react';
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
 import { config } from '../../configs/screens/AuthScreen.config';
 import { DefaultAuthFormContent } from '../../defaults/screens/auth/DefaultAuthFormContent';
-import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
+// import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
+import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Auth'>;
 
@@ -14,7 +15,7 @@ export default function AuthScreen({ navigation }: Props) {
     return (
         <AppScreenDefaultLayout
             navigation={navigation}
-            header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeaderCenter />)}
+            header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeader />)}
             stretchContent
             onBackPress={() => navigation.goBack()}
             error={formError}

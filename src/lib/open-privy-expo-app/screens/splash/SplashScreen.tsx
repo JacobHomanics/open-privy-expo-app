@@ -32,8 +32,6 @@ export default function SplashScreen({ navigation }: Props) {
     }
   }, [isReady, user, navigation, privyError]);
 
-  console.log(isReady, user);
-
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
       {config?.customContent ? config?.customContent : <DefaultSplashScreenContent />}

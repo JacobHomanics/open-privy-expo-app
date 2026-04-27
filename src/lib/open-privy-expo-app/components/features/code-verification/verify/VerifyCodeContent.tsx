@@ -2,7 +2,7 @@ import { useMemo, useEffect, useState, useRef } from 'react';
 import { StyleSheet, Text } from 'react-native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
-import DefaultAppHeaderCenter from '../../../../defaults/DefaultAppHeaderCenter';
+import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
 import CodeDigitInputs from './CodeDigitInputs';
 import DescriptionText from './DescriptionText';
 import ResendCodeButton from './ResendCodeButton';
@@ -129,7 +129,7 @@ export default function VerifyCodeContent({
         <>
             <AppScreenDefaultLayout
                 navigation={navigation}
-                header={<DefaultAppHeaderCenter />}
+                header={<DefaultAppHeader />}
                 onBackPress={onBackPress}
                 onClosePress={onClosePress}
                 error={formError}

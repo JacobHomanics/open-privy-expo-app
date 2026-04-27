@@ -2,7 +2,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { SettingsStackParamList } from '@open-privy-expo-app/navigation/SettingsStack';
 import { useMemo, useState } from 'react';
 import AppScreenDefaultLayout from '@open-privy-expo-app/components/layouts/AppScreenDefaultLayout';
-import DefaultAppHeaderCenter from '../../../../../defaults/DefaultAppHeaderCenter';
+import DefaultAppHeader from '@open-privy-expo-app/defaults/DefaultAppHeader';
 import SendPhoneNumberFormContent from '@open-privy-expo-app/components/features/code-verification/send/SendPhoneNumberFormContent';
 import { isValidUSCanadaPhone } from '../../../../../utils/validation';
 import { useLinkCodePhoneNumberMutation } from './hooks/useLinkCodePhoneNumberMutation';
@@ -25,7 +25,7 @@ export default function LinkAccountPhoneNumberScreen({ navigation }: Props) {
     return (
         <AppScreenDefaultLayout
             navigation={navigation}
-            header={<DefaultAppHeaderCenter />}
+            header={<DefaultAppHeader />}
             onBackPress={() => navigation.goBack()}
             stretchContent
             error={formError}
