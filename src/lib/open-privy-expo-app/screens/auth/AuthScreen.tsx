@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
-import { Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback, View } from 'react-native';
+import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback } from 'react-native';
 // import { config } from '../../configs/screens/AuthScreen.config';
 // import { DefaultAuthFormContent } from '../../defaults/screens/auth/DefaultAuthFormContent';
 // import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
@@ -17,6 +17,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Auth'>;
 export default function AuthScreen({ navigation }: Props) {
     const [formError, setFormError] = useState<string>("");
     const errorBottomSheetRef = useRef<ErrorBottomSheetRef>(null);
+    const scrollViewRef = useRef<ScrollView>(null);
 
     useEffect(() => {
         if (formError) {
@@ -24,21 +25,37 @@ export default function AuthScreen({ navigation }: Props) {
         }
     }, [formError]);
 
+    useEffect(() => {
+        const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
+        const subscription = Keyboard.addListener(showEvent, () => {
+            requestAnimationFrame(() => {
+                scrollViewRef.current?.scrollToEnd({ animated: true });
+            });
+        });
+
+        return () => subscription.remove();
+    }, []);
+
     return (
         <AppScreenContainer>
             <Header />
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                style={{ flex: 1 }}
-            >
+            <KeyboardAvoidingView style={{ flex: 1, marginTop: 16 }}>
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <ScrollView
+                        ref={scrollViewRef}
+                        style={{ flex: 1 }}
+                        contentContainerStyle={{ flexGrow: 1, paddingVertical: 16 }}
+                        keyboardShouldPersistTaps="handled"
+                        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+                        automaticallyAdjustKeyboardInsets={Platform.OS === 'ios'}
+                        showsVerticalScrollIndicator={true}
+                    >
                         <Content
                             setFormError={(error: unknown) =>
                                 setFormError(attemptToResolveErrorMessage(getErrorMessage(error)))
                             }
                         />
-                    </View>
+                    </ScrollView>
                 </TouchableWithoutFeedback>
             </KeyboardAvoidingView>
             <ErrorBottomSheet
