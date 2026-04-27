@@ -44,7 +44,8 @@ export default function WelcomeScreen({ navigation }: Props) {
       gap: 24,
     },
     centerScreen: {
-      ...StyleSheet.absoluteFillObject,
+      flex: 1,
+      width: '100%',
       alignItems: 'center',
       justifyContent: 'center',
     },
