@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
-import { Keyboard, KeyboardAvoidingView, Platform, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, Platform, ScrollView, TouchableWithoutFeedback } from 'react-native';
 // import { config } from '../../configs/screens/AuthScreen.config';
 // import { DefaultAuthFormContent } from '../../defaults/screens/auth/DefaultAuthFormContent';
 // import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
@@ -16,8 +16,9 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Auth'>;
 
 export default function AuthScreen({ navigation }: Props) {
     const [formError, setFormError] = useState<string>("");
-    const errorBottomSheetRef = useRef<ErrorBottomSheetRef>(null);
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
     const scrollViewRef = useRef<ScrollView>(null);
+    const errorBottomSheetRef = useRef<ErrorBottomSheetRef>(null);
 
     useEffect(() => {
         if (formError) {
@@ -26,38 +27,55 @@ export default function AuthScreen({ navigation }: Props) {
     }, [formError]);
 
     useEffect(() => {
-        const showEvent = Platform.OS === 'ios' ? 'keyboardWillShow' : 'keyboardDidShow';
-        const subscription = Keyboard.addListener(showEvent, () => {
+        const handleKeyboardShow = (event: { endCoordinates?: { height?: number } }) => {
+            setKeyboardHeight(event.endCoordinates?.height ?? 0);
             requestAnimationFrame(() => {
                 scrollViewRef.current?.scrollToEnd({ animated: true });
             });
+        };
+
+        const showSub = Keyboard.addListener('keyboardDidShow', handleKeyboardShow);
+        const willShowSub = Keyboard.addListener('keyboardWillShow', handleKeyboardShow);
+        const hideSub = Keyboard.addListener('keyboardDidHide', () => {
+            setKeyboardHeight(0);
+        });
+        const willHideSub = Keyboard.addListener('keyboardWillHide', () => {
+            setKeyboardHeight(0);
         });
 
-        return () => subscription.remove();
+        return () => {
+            showSub.remove();
+            willShowSub.remove();
+            hideSub.remove();
+            willHideSub.remove();
+        };
     }, []);
 
     return (
         <AppScreenContainer>
             <Header />
-            <KeyboardAvoidingView style={{ flex: 1, marginTop: 16 }}>
+            <ScrollView
+                ref={scrollViewRef}
+                style={{ flex: 1, marginTop: 16 }}
+                contentContainerStyle={{
+                    flexGrow: 1,
+                    justifyContent: 'flex-end',
+                    paddingTop: 16,
+                    paddingBottom: 0 + keyboardHeight - 30,
+                }}
+                keyboardShouldPersistTaps="handled"
+                keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
+                automaticallyAdjustKeyboardInsets={false}
+                showsVerticalScrollIndicator={true}
+            >
                 <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-                    <ScrollView
-                        ref={scrollViewRef}
-                        style={{ flex: 1 }}
-                        contentContainerStyle={{ flexGrow: 1, paddingVertical: 16 }}
-                        keyboardShouldPersistTaps="handled"
-                        keyboardDismissMode={Platform.OS === 'ios' ? 'interactive' : 'on-drag'}
-                        automaticallyAdjustKeyboardInsets={Platform.OS === 'ios'}
-                        showsVerticalScrollIndicator={true}
-                    >
-                        <Content
-                            setFormError={(error: unknown) =>
-                                setFormError(attemptToResolveErrorMessage(getErrorMessage(error)))
-                            }
-                        />
-                    </ScrollView>
+                    <Content
+                        setFormError={(error: unknown) =>
+                            setFormError(attemptToResolveErrorMessage(getErrorMessage(error)))
+                        }
+                    />
                 </TouchableWithoutFeedback>
-            </KeyboardAvoidingView>
+            </ScrollView>
             <ErrorBottomSheet
                 ref={errorBottomSheetRef}
                 error={formError}
