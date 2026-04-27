@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 export type headerConfig = {
-    leftColumnContent?: ReactNode;
-    centerColumnContent?: ReactNode;
-    rightColumnContent?: ReactNode;
+    left?: ReactNode;
+    center?: ReactNode;
+    right?: ReactNode;
 };

@@ -3,7 +3,7 @@ import AppThemeToggleButton from '@open-privy-expo-app/components/AppThemeToggle
 import DefaultAppBackButton from '@open-privy-expo-app/components/DefaultAppBackButton';
 import ThreeSlotRow from './ThreeSlotRow';
 import { welcomeScreenHeaderConfig } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
-export default function DefaultAppHeader({}) {
+export default function DefaultAppWelcomeScreenHeader() {
     return (
         <ThreeSlotRow
             left={welcomeScreenHeaderConfig?.left ?? <DefaultAppBackButton />}

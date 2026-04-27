@@ -43,7 +43,7 @@ export default function WelcomeScreen({ navigation }: Props) {
       justifyContent: 'center',
       gap: 24,
     },
-    centerScreen: {
+    content: {
       flex: 1,
       width: '100%',
       alignItems: 'center',
@@ -135,7 +135,7 @@ export default function WelcomeScreen({ navigation }: Props) {
       <SafeAreaView style={styles.safeArea}>
         <DefaultAppHeader />
 
-        <View style={styles.centerScreen}>
+        <View style={styles.content}>
           <Text>Welcome</Text>
         </View>
 
