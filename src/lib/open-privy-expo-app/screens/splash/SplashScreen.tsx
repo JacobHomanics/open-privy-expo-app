@@ -5,6 +5,7 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
 import DefaultSplashScreenContent from './DefaultSplashScreenContent';
+import { config } from '@open-privy-expo-app/configs/screens/SplashScreen.config';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
@@ -24,7 +25,7 @@ export default function SplashScreen({ navigation }: Props) {
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>
-      <DefaultSplashScreenContent />
+      {config?.customContent ? config?.customContent : <DefaultSplashScreenContent />}
     </View>
   );
 }
