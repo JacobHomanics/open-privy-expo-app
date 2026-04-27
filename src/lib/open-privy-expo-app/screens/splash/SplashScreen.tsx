@@ -5,7 +5,7 @@ import { usePrivy } from '@privy-io/expo';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import { useTheme } from "@open-privy-expo-app/theme";
-import DefaultSplashScreenContent from './DefaultSplashScreenContent';
+import DefaultSplashScreenContent from './Content';
 import { config } from '@open-privy-expo-app/configs/screens/SplashScreen.config';
 import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
 
