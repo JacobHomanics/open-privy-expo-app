@@ -1,4 +1,4 @@
-import type { HeaderConfig } from "./types/HeaderConfig";
+
 import { Text } from "react-native";
 import { ReactNode } from "react";
 
@@ -18,12 +18,20 @@ export type WelcomeScreenConfig = {
     content?: ContentConfig;
 };
 
+export type HeaderConfig = {
+    center?: {
+        customContent?: ReactNode;
+        customLogo?: ReactNode;
+        customName?: ReactNode;
+    }
+    right?: {
+        customContent?: ReactNode;
+        customToggleButton?: ReactNode;
+    };
+};
+
 export const config: WelcomeScreenConfig = {
     header: {
-        left: {
-            // customContent: <Text>Piece 3</Text>,
-            // customBackButton: <Text>Piece 2</Text>,
-        },
         center: {
             // customContent: <Text>Piece 3</Text>,
             // customLogo: <Text>Piece 1</Text>,
@@ -32,16 +40,15 @@ export const config: WelcomeScreenConfig = {
         right: {
             // customContent: <Text>Hello</Text>,
             // customToggleButton: <></>,
-            // customCloseButton: <></>
         },
     },
     content: {
         // customBodyTopContent: <></>,
-        // loginButton: {
-        //     // customContent: <></>,
-        //     // customIcon: <></>,
-        //     // customText: 'LOGIN',
-        // },
+        loginButton: {
+            // customContent: <></>,
+            // customIcon: <></>,
+            // customText: 'LOGIN',
+        },
         // customBodyBottomContent: <></>,
     }
 };
