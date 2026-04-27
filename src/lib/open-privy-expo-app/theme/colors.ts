@@ -17,6 +17,8 @@ export const palette = {
 
 export type ColorPalette = typeof palette;
 
+export type ThemeMode = 'light' | 'dark';
+
 /** Semantic colors for light theme */
 export const light = {
   background: palette.cream,
