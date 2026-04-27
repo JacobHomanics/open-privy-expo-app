@@ -19,6 +19,9 @@ export type WelcomeScreenConfig = {
 };
 
 export type HeaderConfig = {
+    left?: {
+        customContent?: ReactNode;
+    }
     center?: {
         customContent?: ReactNode;
         customLogo?: ReactNode;
@@ -32,6 +35,9 @@ export type HeaderConfig = {
 
 export const config: WelcomeScreenConfig = {
     header: {
+        left: {
+            // customContent: <Text>Left</Text>,
+        },
         center: {
             // customContent: <Text>Piece 3</Text>,
             // customLogo: <Text>Piece 1</Text>,
