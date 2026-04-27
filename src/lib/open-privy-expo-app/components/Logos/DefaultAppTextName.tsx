@@ -12,6 +12,7 @@ export default function DefaultAppTextName() {
                 text: {
                     fontSize: 20,
                     fontWeight: '600',
+                    textAlign: 'center',
                     color: theme.text,
                 },
             }),
