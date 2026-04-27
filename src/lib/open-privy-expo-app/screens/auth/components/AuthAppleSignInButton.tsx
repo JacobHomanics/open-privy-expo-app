@@ -11,6 +11,10 @@ import { useTheme } from '@open-privy-expo-app/theme';
 import { useAnyOAuthLoginPending } from '../hooks/useAnyOAuthLoginPending';
 import { useAppleOAuthLoginMutation } from '../hooks/useAppleOAuthLoginMutation';
 import { OAuthProviderButton } from './OAuthProviderButton';
+import { resetRootStackToHome } from '@open-privy-expo-app/navigation/resetRootStackToHome';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -24,6 +28,7 @@ export function AuthAppleSignInButton({
     mode,
 }: AuthAppleSignInButtonProps) {
     const { theme } = useTheme();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Auth'>>();
     const [useNativeAppleButton, setUseNativeAppleButton] = useState(Platform.OS === 'ios');
     const oauthBusy = useAnyOAuthLoginPending();
     const mutation = useAppleOAuthLoginMutation({});
@@ -60,7 +65,7 @@ export function AuthAppleSignInButton({
                         }
                         cornerRadius={10}
                         style={{ width: '100%', height: 44 }}
-                        onPress={() => mutation.mutateAsync().catch((error) => setFormError(error))}
+                        onPress={() => mutation.mutateAsync().then(() => resetRootStackToHome(navigation)).catch((error) => setFormError(error))}
                     />
                 </View>
             </View>
