@@ -1,9 +1,9 @@
 import { View, Text } from "react-native";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useEmailLoginCodeMutation } from "./hooks/useEmailLoginCodeMutation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
-import { useTheme } from "@open-privy-expo-app/theme";
+import { theme, useTheme } from "@open-privy-expo-app/theme";
 import { RootStackParamList } from "@open-privy-expo-app/navigation/RootStack";
 import { usePhoneNumberMutation } from "./hooks/usePhoneNumberLoginMutation";
 import PhoneEmailTabs from "./components/PhoneEmailTabs";
@@ -12,75 +12,43 @@ import SendPhoneNumberFormContent from "@open-privy-expo-app/components/features
 import { isValidEmail, isValidUSCanadaPhone } from "@open-privy-expo-app/utils/validation";
 import { config } from "@open-privy-expo-app/configs/screens/AuthScreen.config";
 import { AuthAppleSignInButton } from "./components/AuthAppleSignInButton";
+import { FarcasterOAuthProviderButton } from "./components/FarcasterOAuthProviderButton";
+import { XOAuthProviderButton } from "./components/XOAuthProviderButton";
+import { GoogleOAuthProviderButton } from "./components/GoogleOAuthProviderButton";
+import { StyleSheet } from "react-native";
 
 type AuthMethod = "phoneNumber" | "email";
-
 
 const customEmailContent = config?.content?.customEmailContent;
 const customPhoneNumberContent = config?.content?.customPhoneNumberContent;
 const hasCodeBasedAuth = customEmailContent !== null || customPhoneNumberContent !== null;
-
+const hasOauthAuth = config?.content?.oAuth?.apple !== null || config?.content?.oAuth?.google !== null || config?.content?.oAuth?.twitter !== null || config?.content?.oAuth?.farcaster !== null;
 
 export default function Content() {
-
-    const oAuthContent = config?.content?.oAuth;
-    const hasOauthAuth = oAuthContent?.apple !== null || oAuthContent?.google !== null || oAuthContent?.twitter !== null || oAuthContent?.farcaster !== null;
-
     const { theme } = useTheme();
-    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-
-    //   const resetToHome = () =>
-    //     navigation.dispatch(
-    //       CommonActions.reset({
-    //         index: 0,
-    //         routes: [{ name: "Home" }],
-    //       }),
-    //     );
-
-    //   const googleOAuthMutation = useGoogleOAuthLoginMutation({
-    //     onSuccess: resetToHome,
-    //     onError: (error) => setFormError(error),
-    //   });
-
-    //   // NOTE: If issues with login, please do a thorough review of the twitter OAuth login setup on the Privy dashboard.
-    //   const twitterOAuthMutation = useTwitterOAuthLoginMutation({
-    //     onSuccess: resetToHome,
-    //     onError: (error) => setFormError(error),
-    //   });
-
-    //   const appleOAuthMutation = useAppleOAuthLoginMutation({
-    //     onSuccess: resetToHome,
-    //     onError: (error) => setFormError(error),
-    //   });
-
-    //   const farcasterLoginMutation = useFarcasterLoginMutation({
-    //     onSuccess: resetToHome,
-    //     onError: (error) => setFormError(error),
-    //   });
-
-    //   const oauthPending =
-    //     googleOAuthMutation.isPending ||
-    //     appleOAuthMutation.isPending ||
-    //     twitterOAuthMutation.isPending ||
-    //     farcasterLoginMutation.isPending;
-
-    //   const phoneEnabled = authProviderFlags.phoneNumber;
-    //   const emailEnabled = authProviderFlags.email;
-    //   const hasCodeBasedAuth = phoneEnabled || emailEnabled;
-    //   const hasOauthAuth =
-    //     authProviderFlags.google ||
-    //     authProviderFlags.apple ||
-    //     authProviderFlags.twitter ||
-    //     authProviderFlags.farcaster;
 
     const bodyTopContent = config?.content?.customBodyTopContent ?? <View>
-        <Text style={{ fontSize: 20, fontWeight: 'bold', color: theme.text, textAlign: 'center' }}>Create Account / Sign in</Text>
+        <Text style={{ fontSize: 28, fontWeight: 'bold', color: theme.text, textAlign: 'center' }}>Create Account / Sign in</Text>
     </View>
 
     return (
-        <View>
+        <View style={{ gap: 16 }}>
             {bodyTopContent}
+            <OauthContent />
+            <DividerContent />
             <PhoneEmailTabsContent />
+        </View>
+    );
+}
+
+const OauthContent = () => {
+    const { mode } = useTheme();
+    return (
+        <View style={{ gap: 12 }}>
+            <AuthAppleSignInButton setFormError={() => { }} mode={mode} />
+            <GoogleOAuthProviderButton setFormError={() => { }} />
+            <XOAuthProviderButton setFormError={() => { }} />
+            <FarcasterOAuthProviderButton setFormError={() => { }} />
         </View>
     );
 }
@@ -109,5 +77,40 @@ const PhoneEmailTabsContent = () => {
     );
 }
 
+const DividerContent = () => {
+    const { theme } = useTheme();
 
+    const styles = useMemo(
+        () =>
+            StyleSheet.create({
+                dividerRow: {
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginVertical: 0,
+                    marginHorizontal: 24,
+                },
+                dividerLine: {
+                    flex: 1,
+                    height: StyleSheet.hairlineWidth,
+                    backgroundColor: theme.border,
+                },
+                dividerLabel: {
+                    fontSize: 14,
+                    color: theme.textSecondary,
+                },
+            }),
+        [theme],
+    );
 
+    return (
+        <>
+            {hasCodeBasedAuth && hasOauthAuth && (
+                <View style={styles.dividerRow}>
+                    <View style={styles.dividerLine} />
+                    <Text style={styles.dividerLabel}>or</Text>
+                    <View style={styles.dividerLine} />
+                </View>
+            )}
+        </>
+    );
+}

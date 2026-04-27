@@ -161,13 +161,8 @@ export function DefaultAuthFormContent({
       {<Text style={styles.titleText}>{"Create Account / Sign in"}</Text>}
       {authProviderFlags.apple && (
         <AuthAppleSignInButton
-          theme={theme}
+          setFormError={setFormError}
           mode={mode}
-          onPress={() => appleOAuthMutation.mutate()}
-          disabled={oauthPending}
-          rowStyle={styles.oauthProviderButton}
-          rowTextStyle={styles.oauthProviderButtonText}
-          spacingStyle={styles.oauthProviderButtonSpacing}
         />
       )}
       {authProviderFlags.google && (

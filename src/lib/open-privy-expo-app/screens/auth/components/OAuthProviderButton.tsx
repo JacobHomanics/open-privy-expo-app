@@ -1,24 +1,34 @@
 import { useMemo, type ReactNode } from 'react';
 import { Pressable, StyleSheet, Text } from 'react-native';
 import { useTheme } from "@open-privy-expo-app/theme";
+import { useAnyOAuthLoginPending } from '../hooks/useAnyOAuthLoginPending';
+import { resetRootStackToHome } from '@open-privy-expo-app/navigation/resetRootStackToHome';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
+
+type OAuthLoginMutation = {
+    mutateAsync: () => Promise<unknown>;
+};
 
 export type OAuthProviderButtonProps = {
     label: string;
-    onPress: () => void;
-    disabled: boolean;
+    mutation: OAuthLoginMutation;
+    onError?: (error: unknown) => void;
     /** Icon shown to the left of the label */
     icon: ReactNode;
     /** When true, adds top margin for stacked buttons below the first */
-    stacked?: boolean;
 };
 
 export function OAuthProviderButton({
     label,
-    onPress,
-    disabled,
+    mutation,
+    onError,
     icon,
-    stacked,
 }: OAuthProviderButtonProps) {
+    const oauthBusy = useAnyOAuthLoginPending();
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList, 'Auth'>>();
+
     const { theme } = useTheme();
     const styles = useMemo(
         () =>
@@ -35,9 +45,7 @@ export function OAuthProviderButton({
                     borderColor: theme.border,
                     backgroundColor: theme.background,
                 },
-                stacked: {
-                    marginTop: 12,
-                },
+
                 label: {
                     fontSize: 16,
                     fontWeight: '600',
@@ -51,11 +59,15 @@ export function OAuthProviderButton({
         <Pressable
             style={({ pressed }) => [
                 styles.button,
-                stacked && styles.stacked,
-                (pressed || disabled) && { opacity: 0.85 },
+                (pressed || oauthBusy) && { opacity: 0.85 },
             ]}
-            onPress={onPress}
-            disabled={disabled}
+            onPress={() =>
+                mutation
+                    .mutateAsync()
+                    .then(() => resetRootStackToHome(navigation))
+                    .catch((error) => onError?.(error))
+            }
+            disabled={oauthBusy}
             accessibilityRole="button"
             accessibilityLabel={label}
         >

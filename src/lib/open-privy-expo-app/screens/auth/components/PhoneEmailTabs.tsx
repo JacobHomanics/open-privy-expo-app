@@ -20,7 +20,6 @@ export default function PhoneEmailTabs({ value, onChange }: Props) {
                     borderRadius: 10,
                     padding: 4,
                     marginHorizontal: 24,
-                    marginTop: 24,
                 },
                 tab: {
                     flex: 1,
