@@ -42,13 +42,10 @@ function renderOAuthProviderContent(
 export default function Content({ setFormError }: { setFormError: (error: unknown) => void }) {
     const { theme } = useTheme();
 
-    const bodyTopContent = config?.content?.customBodyTopContent ?? <View>
-        <Text style={{ fontSize: 28, fontWeight: 'bold', color: theme.text, textAlign: 'center' }}>Create Account / Sign in</Text>
-    </View>
+
 
     return (
         <View style={{ gap: 16 }}>
-            {bodyTopContent}
             <OauthContent setFormError={setFormError} />
             <DividerContent />
             <PhoneEmailTabsContent setFormError={setFormError} />

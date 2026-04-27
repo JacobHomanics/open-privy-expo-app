@@ -1,7 +1,7 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
 import AppScreenContainer from '@open-privy-expo-app/components/AppScreenContainer';
-import { Keyboard, Platform, ScrollView, TouchableWithoutFeedback } from 'react-native';
+import { Keyboard, Platform, ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 // import { config } from '../../configs/screens/AuthScreen.config';
 // import { DefaultAuthFormContent } from '../../defaults/screens/auth/DefaultAuthFormContent';
 // import DefaultAppHeaderCenter from '@open-privy-expo-app/defaults/DefaultAppHeaderCenter';
@@ -11,6 +11,9 @@ import Content from './Content';
 import ErrorBottomSheet, { type ErrorBottomSheetRef } from '@open-privy-expo-app/components/bottom-sheets/ErrorBottomSheet';
 import { useEffect, useRef, useState } from 'react';
 import { attemptToResolveErrorMessage, getErrorMessage } from '@open-privy-expo-app/utils/Error Messages/errorMessages';
+import { config } from '@open-privy-expo-app/configs/screens/AuthScreen.config';
+import { useTheme } from '@open-privy-expo-app/theme';
+import { Text } from 'react-native';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Auth'>;
 
@@ -19,6 +22,7 @@ export default function AuthScreen({ navigation }: Props) {
     const [keyboardHeight, setKeyboardHeight] = useState(0);
     const scrollViewRef = useRef<ScrollView>(null);
     const errorBottomSheetRef = useRef<ErrorBottomSheetRef>(null);
+    const { theme } = useTheme();
 
     useEffect(() => {
         if (formError) {
@@ -51,9 +55,15 @@ export default function AuthScreen({ navigation }: Props) {
         };
     }, []);
 
+    const bodyTopContent = config?.content?.customBodyTopContent ?? <View>
+        <Text style={{ fontSize: 28, fontWeight: 'bold', color: theme.text, textAlign: 'center', marginTop: 16 }}>Create Account / Sign in</Text>
+    </View>
+
     return (
         <AppScreenContainer>
             <Header />
+            {bodyTopContent}
+
             <ScrollView
                 ref={scrollViewRef}
                 style={{ flex: 1, marginTop: 16 }}

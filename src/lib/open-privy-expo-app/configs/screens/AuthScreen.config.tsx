@@ -54,12 +54,12 @@ export const config: AuthScreenConfig = {
         },
     },
     content: {
-        // oAuth: {
-        //     apple: { enabled: true },
-        //     google: { enabled: true },
-        //     twitter: { enabled: true },
-        //     farcaster: { enabled: true },
-        // },
+        oAuth: {
+            apple: { enabled: true },
+            google: { enabled: true },
+            twitter: { enabled: true },
+            farcaster: { enabled: true },
+        },
 
         // customBodyTopContent: <></>
         // customEmailContent: null,
