@@ -1,12 +1,12 @@
 import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName';
-import AppToggleButton from '@open-privy-expo-app/components/AppToggleButton';
+import AppToggleButton from '@open-privy-expo-app/components/app-buttons/AppToggleButton';
 import ThreeSlotRow from './ThreeSlotRow';
 import { welcomeScreenHeaderConfig } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
 import { useTheme } from '@open-privy-expo-app/theme';
 import { useMemo } from 'react';
 import { StyleSheet } from 'react-native';
-import AppCloseButton from '@open-privy-expo-app/components/AppCloseButton';
-import AppBackButton from '@open-privy-expo-app/components/AppBackButton';
+import AppCloseButton from '@open-privy-expo-app/components/app-buttons/AppCloseButton';
+import AppBackButton from '@open-privy-expo-app/components/app-buttons/AppBackButton';
 
 export default function DefaultAppHeader() {
     const { theme } = useTheme();

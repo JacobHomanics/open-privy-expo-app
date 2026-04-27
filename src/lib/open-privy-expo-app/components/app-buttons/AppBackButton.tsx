@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import AppIoniconButton from "./buttons/ionicon-button/AppIoniconButton";
+import AppIoniconButton from "../buttons/ionicon-button/AppIoniconButton";
 
 export default function AppBackButton() {
     const navigation = useNavigation();
