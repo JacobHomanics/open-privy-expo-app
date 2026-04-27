@@ -4,13 +4,14 @@ import { useTheme } from "@open-privy-expo-app/theme";
 import SendCodeFormContent from './SendCodeFormContent';
 import { SendCodeEmailTextInput } from './SendCodeEmailTextInput';
 import ErrorCallout from '@open-privy-expo-app/components/callouts/ErrorCallout';
+import { isValidEmail } from '@open-privy-expo-app/utils/validation';
+import { useEmailLoginCodeMutation } from '@open-privy-expo-app/screens/auth/hooks/useEmailLoginCodeMutation';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '@open-privy-expo-app/navigation/RootStack';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useState } from 'react';
 
 type SendEmailFormContentProps = {
-    email: string;
-    onEmailChange: (value: string) => void;
-    onSendCode: () => void;
-    canContinue: boolean;
-    isLoading: boolean;
     message?: string;
     sendError?: string;
     buttonLabel?: string;
@@ -18,16 +19,13 @@ type SendEmailFormContentProps = {
 };
 
 export default function SendEmailFormContent({
-    email,
-    onEmailChange,
-    onSendCode,
-    canContinue,
-    isLoading,
     message,
     sendError,
     buttonLabel,
     title,
 }: SendEmailFormContentProps) {
+    const [email, setEmail] = useState("");
+
     const { theme } = useTheme();
     const messageStyle = useMemo(
         () =>
@@ -42,18 +40,27 @@ export default function SendEmailFormContent({
         [theme]
     );
 
+    const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+
+    const emailMutation = useEmailLoginCodeMutation({
+        email,
+        onSuccess: () =>
+            navigation.navigate("VerifyAuthCodeEmail", { value: email.trim() }),
+        // onError: (error) => setFormError(error),
+    });
+
     return (
         <>
             {message ? <Text style={messageStyle.text}>{message}</Text> : null}
             {sendError ? <ErrorCallout error={sendError} /> : null}
             <SendCodeFormContent
-                onSendCode={onSendCode}
-                canContinue={canContinue}
-                isLoading={isLoading}
+                onSendCode={emailMutation.mutate}
+                canContinue={isValidEmail(email)}
+                isLoading={emailMutation.isPending}
                 buttonLabel={buttonLabel}
                 title={title}
             >
-                <SendCodeEmailTextInput email={email} onEmailChange={onEmailChange} />
+                <SendCodeEmailTextInput email={email} onEmailChange={setEmail} />
             </SendCodeFormContent>
         </>
     );

@@ -3,39 +3,31 @@ import { useState } from "react";
 import { useEmailLoginCodeMutation } from "./hooks/useEmailLoginCodeMutation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "@open-privy-expo-app/theme";
 import { RootStackParamList } from "@open-privy-expo-app/navigation/RootStack";
 import { usePhoneNumberMutation } from "./hooks/usePhoneNumberLoginMutation";
 import PhoneEmailTabs from "./components/PhoneEmailTabs";
 import SendEmailFormContent from "@open-privy-expo-app/components/features/code-verification/send/SendEmailFormContent";
 import SendPhoneNumberFormContent from "@open-privy-expo-app/components/features/code-verification/send/SendPhoneNumberFormContent";
 import { isValidEmail, isValidUSCanadaPhone } from "@open-privy-expo-app/utils/validation";
+import { config } from "@open-privy-expo-app/configs/screens/AuthScreen.config";
+import { AuthAppleSignInButton } from "./components/AuthAppleSignInButton";
 
 type AuthMethod = "phoneNumber" | "email";
 
+
+const customEmailContent = config?.content?.customEmailContent;
+const customPhoneNumberContent = config?.content?.customPhoneNumberContent;
+const hasCodeBasedAuth = customEmailContent !== null || customPhoneNumberContent !== null;
+
+
 export default function Content() {
+
+    const oAuthContent = config?.content?.oAuth;
+    const hasOauthAuth = oAuthContent?.apple !== null || oAuthContent?.google !== null || oAuthContent?.twitter !== null || oAuthContent?.farcaster !== null;
+
+    const { theme } = useTheme();
     const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-    const [authMethod, setAuthMethod] = useState<AuthMethod>(
-        "phoneNumber"
-    );
-
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [email, setEmail] = useState("");
-
-    const emailMutation = useEmailLoginCodeMutation({
-        email,
-        onSuccess: () =>
-            navigation.navigate("VerifyAuthCodeEmail", { value: email.trim() }),
-        // onError: (error) => setFormError(error),
-    });
-
-    const phoneNumberMutation = usePhoneNumberMutation({
-        phoneNumber,
-        onSuccess: () =>
-            navigation.navigate("VerifyAuthCodePhoneNumber", {
-                value: phoneNumber.trim(),
-            }),
-        // onError: (error) => setFormError(error),
-    });
 
     //   const resetToHome = () =>
     //     navigation.dispatch(
@@ -81,28 +73,39 @@ export default function Content() {
     //     authProviderFlags.twitter ||
     //     authProviderFlags.farcaster;
 
+    const bodyTopContent = config?.content?.customBodyTopContent ?? <View>
+        <Text style={{ fontSize: 20, fontWeight: 'bold', color: theme.text, textAlign: 'center' }}>Create Account / Sign in</Text>
+    </View>
+
     return (
-        <View>{(
-            <PhoneEmailTabs value={authMethod} onChange={setAuthMethod} />
-        )}
-            {authMethod === "email" ? (
-                <SendEmailFormContent
-                    email={email}
-                    onEmailChange={setEmail}
-                    onSendCode={() => emailMutation.mutate()}
-                    canContinue={isValidEmail(email)}
-                    isLoading={emailMutation.isPending}
-                />
-            ) : (
-                <SendPhoneNumberFormContent
-                    phoneNumber={phoneNumber}
-                    onPhoneNumberChange={setPhoneNumber}
-                    onSendCode={() => phoneNumberMutation.mutate()}
-                    canContinue={isValidUSCanadaPhone(phoneNumber)}
-                    isLoading={phoneNumberMutation.isPending}
-                />
-            )}
+        <View>
+            {bodyTopContent}
+            <PhoneEmailTabsContent />
         </View>
+    );
+}
+
+const PhoneEmailTabsContent = () => {
+    const [authMethod, setAuthMethod] = useState<AuthMethod>(
+        "phoneNumber"
+    );
+
+    return (
+        <>
+            {customEmailContent !== null && customPhoneNumberContent !== null && (
+                <>
+                    <PhoneEmailTabs value={authMethod} onChange={setAuthMethod} />
+                    {authMethod === "email" ? <SendEmailFormContent /> : <SendPhoneNumberFormContent />}
+                </>
+            )}
+
+            {customEmailContent !== null && customPhoneNumberContent === null && (
+                <SendEmailFormContent title="Email" />
+            )}
+            {customEmailContent === null && customPhoneNumberContent !== null && (
+                <SendPhoneNumberFormContent title="Phone Number" />
+            )}
+        </>
     );
 }
 

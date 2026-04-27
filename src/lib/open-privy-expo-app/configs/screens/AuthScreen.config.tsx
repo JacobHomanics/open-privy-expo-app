@@ -2,6 +2,20 @@ import { ReactNode } from "react";
 
 export type AuthScreenConfig = {
     header?: HeaderConfig;
+    content?: ContentConfig;
+};
+
+export type ContentConfig = {
+    customContent?: ReactNode;
+    customBodyTopContent?: ReactNode;
+    customEmailContent?: ReactNode | null;
+    customPhoneNumberContent?: ReactNode | null;
+    oAuth?: {
+        apple?: ReactNode | null;
+        google?: ReactNode | null;
+        twitter?: ReactNode | null;
+        farcaster?: ReactNode | null;
+    };
 };
 
 export type HeaderConfig = {
@@ -33,5 +47,10 @@ export const config: AuthScreenConfig = {
             // customContent: <Text>Hello</Text>,
             // customToggleButton: <></>,
         },
+    },
+    content: {
+        // customBodyTopContent: <></>
+        // customEmailContent: null,
+        // customPhoneNumberContent: null,
     },
 };
