@@ -1,6 +1,4 @@
 import type { HeaderConfig } from "./types/HeaderConfig";
-import type { ReactNode } from "react";
-import { Text } from "react-native";
 
 export type WelcomeScreenConfig = {
     header?: HeaderConfig;
@@ -8,8 +6,6 @@ export type WelcomeScreenConfig = {
 
 export const config: WelcomeScreenConfig = {
     header: {
-        // left: <></>,
-        // center: <><DefaultAppTextLogoAndName /><DefaultAppTextLogoAndName /></>,
         left: {
             // customContent: <Text>Piece 3</Text>,
             // customBackButton: <Text>Piece 2</Text>,
