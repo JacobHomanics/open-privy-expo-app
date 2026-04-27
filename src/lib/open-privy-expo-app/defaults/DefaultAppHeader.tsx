@@ -1,14 +1,38 @@
 import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName';
-import AppThemeToggleButton from '@open-privy-expo-app/components/AppThemeToggleButton';
-import DefaultAppBackButton from '@open-privy-expo-app/components/DefaultAppBackButton';
+import AppToggleButton from '@open-privy-expo-app/components/AppToggleButton';
 import ThreeSlotRow from './ThreeSlotRow';
 import { welcomeScreenHeaderConfig } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
-export default function DefaultAppHeader({}) {
+import { useTheme } from '@open-privy-expo-app/theme';
+import { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
+import AppCloseButton from '@open-privy-expo-app/components/AppCloseButton';
+import AppBackButton from '@open-privy-expo-app/components/AppBackButton';
+
+export default function DefaultAppHeader() {
+    const { theme } = useTheme();
+    const styles = useMemo(() => StyleSheet.create({
+        closeButtonTouchable: {
+            padding: 8,
+            borderRadius: 20,
+            backgroundColor: theme.border,
+        },
+    }), [theme]);
+
     return (
         <ThreeSlotRow
-            left={welcomeScreenHeaderConfig?.left ?? <DefaultAppBackButton />}
+            left={welcomeScreenHeaderConfig?.left ?? <AppBackButton />}
             center={welcomeScreenHeaderConfig?.center ?? <DefaultAppTextLogoAndName />}
-            right={welcomeScreenHeaderConfig?.right ?? <AppThemeToggleButton />}
+            right={welcomeScreenHeaderConfig?.right ??
+                <>
+                    <AppToggleButton />
+                    <AppCloseButton />
+                </>
+            }
+            slotFlex={{
+                left: 1,
+                center: 3,
+                right: 1,
+            }}
         />
     );
 }

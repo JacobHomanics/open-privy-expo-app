@@ -15,19 +15,15 @@ type ThreeSlotRowProps = {
 };
 
 export default function ThreeSlotRow({ left, center, right, slotFlex }: ThreeSlotRowProps) {
-    const leftFlex = slotFlex?.left;
-    const centerFlex = slotFlex?.center;
-    const rightFlex = slotFlex?.right;
-
     return (
         <View style={styles.content}>
-            <View style={[styles.slot, styles.leftSlot, { flex: leftFlex }]}>
+            <View style={[styles.slot, styles.leftSlot, { flex: slotFlex?.left ?? 1 }]}>
                 {left}
             </View>
-            <View style={[styles.slot, styles.centerSlot, { flex: centerFlex }]}>
+            <View style={[styles.slot, styles.centerSlot, { flex: slotFlex?.center ?? 1 }]}>
                 {center}
             </View>
-            <View style={[styles.slot, styles.rightSlot, { flex: rightFlex }]}>
+            <View style={[styles.slot, styles.rightSlot, { flex: slotFlex?.right ?? 1 }]}>
                 {right}
             </View>
         </View>

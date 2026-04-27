@@ -20,7 +20,7 @@ export const config: WelcomeScreenConfig = {
 };
 
 export const welcomeScreenHeaderConfig: headerConfig = {
-    // left: <></>
+    // left: <></>,
     // center: <><DefaultAppTextLogoAndName /><DefaultAppTextLogoAndName /></>,
     // right: <><AppThemeToggleButton /><AppThemeToggleButton /><AppThemeToggleButton /></>,
 };
