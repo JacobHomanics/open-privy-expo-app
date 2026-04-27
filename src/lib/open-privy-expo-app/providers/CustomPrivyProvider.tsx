@@ -20,7 +20,7 @@ const privyElementsConfig = PRIVY_MFA_RELYING_PARTY
 
 export default function CustomPrivyProvider({ children }: { children: ReactNode }) {
     return (
-        <PrivyProvider appId={appId} clientId={clientId} config={privyConfig}>
+        <PrivyProvider appId={appId + " 12"} clientId={clientId} config={privyConfig}>
             <PrivyElements config={privyElementsConfig} />
             {children}
         </PrivyProvider>
