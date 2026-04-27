@@ -11,11 +11,16 @@ export type ContentConfig = {
     customEmailContent?: ReactNode | null;
     customPhoneNumberContent?: ReactNode | null;
     oAuth?: {
-        apple?: ReactNode | null;
-        google?: ReactNode | null;
-        twitter?: ReactNode | null;
-        farcaster?: ReactNode | null;
+        apple?: OAuthProviderConfig;
+        google?: OAuthProviderConfig;
+        twitter?: OAuthProviderConfig;
+        farcaster?: OAuthProviderConfig;
     };
+};
+
+export type OAuthProviderConfig = {
+    enabled?: boolean;
+    customContent?: ReactNode;
 };
 
 export type HeaderConfig = {
@@ -49,6 +54,13 @@ export const config: AuthScreenConfig = {
         },
     },
     content: {
+        // oAuth: {
+        //     apple: { enabled: true },
+        //     google: { enabled: true },
+        //     twitter: { enabled: true },
+        //     farcaster: { enabled: true },
+        // },
+
         // customBodyTopContent: <></>
         // customEmailContent: null,
         // customPhoneNumberContent: null,

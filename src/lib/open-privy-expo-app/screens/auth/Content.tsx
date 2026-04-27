@@ -1,5 +1,6 @@
 import { View, Text } from "react-native";
 import { useMemo, useState } from "react";
+import { ReactNode } from "react";
 import { useEmailLoginCodeMutation } from "./hooks/useEmailLoginCodeMutation";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/native";
@@ -16,13 +17,27 @@ import { FarcasterOAuthProviderButton } from "./components/FarcasterOAuthProvide
 import { XOAuthProviderButton } from "./components/XOAuthProviderButton";
 import { GoogleOAuthProviderButton } from "./components/GoogleOAuthProviderButton";
 import { StyleSheet } from "react-native";
+import { OAuthProviderConfig } from "@open-privy-expo-app/configs/screens/AuthScreen.config";
 
 type AuthMethod = "phoneNumber" | "email";
 
 const customEmailContent = config?.content?.customEmailContent;
 const customPhoneNumberContent = config?.content?.customPhoneNumberContent;
 const hasCodeBasedAuth = customEmailContent !== null || customPhoneNumberContent !== null;
-const hasOauthAuth = config?.content?.oAuth?.apple !== null || config?.content?.oAuth?.google !== null || config?.content?.oAuth?.twitter !== null || config?.content?.oAuth?.farcaster !== null;
+const hasOauthAuth = Boolean(
+    config?.content?.oAuth?.apple?.enabled
+    || config?.content?.oAuth?.google?.enabled
+    || config?.content?.oAuth?.twitter?.enabled
+    || config?.content?.oAuth?.farcaster?.enabled
+);
+
+function renderOAuthProviderContent(
+    providerConfig: OAuthProviderConfig | undefined,
+    defaultContent: ReactNode
+) {
+    if (!providerConfig?.enabled) return null;
+    return providerConfig.customContent ?? defaultContent;
+}
 
 export default function Content({ setFormError }: { setFormError: (error: unknown) => void }) {
     const { theme } = useTheme();
@@ -45,10 +60,22 @@ const OauthContent = ({ setFormError }: { setFormError: (error: unknown) => void
     const { mode } = useTheme();
     return (
         <View style={{ gap: 12 }}>
-            <AuthAppleSignInButton setFormError={setFormError} mode={mode} />
-            <GoogleOAuthProviderButton onError={setFormError} />
-            <XOAuthProviderButton onError={setFormError} />
-            <FarcasterOAuthProviderButton onError={setFormError} />
+            {renderOAuthProviderContent(
+                config?.content?.oAuth?.apple,
+                <AuthAppleSignInButton setFormError={setFormError} mode={mode} />
+            )}
+            {renderOAuthProviderContent(
+                config?.content?.oAuth?.google,
+                <GoogleOAuthProviderButton onError={setFormError} />
+            )}
+            {renderOAuthProviderContent(
+                config?.content?.oAuth?.twitter,
+                <XOAuthProviderButton onError={setFormError} />
+            )}
+            {renderOAuthProviderContent(
+                config?.content?.oAuth?.farcaster,
+                <FarcasterOAuthProviderButton onError={setFormError} />
+            )}
         </View>
     );
 }
