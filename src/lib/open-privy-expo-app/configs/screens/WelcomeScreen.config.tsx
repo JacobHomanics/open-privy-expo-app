@@ -1,3 +1,7 @@
+import AppThemeToggleButton from "@open-privy-expo-app/components/AppThemeToggleButton";
+import DefaultAppBackButton from "@open-privy-expo-app/components/DefaultAppBackButton";
+import DefaultAppTextLogoAndName from "@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName";
+import type { headerConfig } from "./types/headerConfig";
 import type { ReactNode } from "react";
 export const SHOW_THEME_TOGGLE = true;
 
@@ -13,4 +17,10 @@ export type WelcomeScreenConfig = {
 
 export const config: WelcomeScreenConfig = {
 
+};
+
+export const welcomeScreenHeaderConfig: headerConfig = {
+    // leftColumnContent: <></>
+    // centerColumnContent: <><DefaultAppTextLogoAndName /><DefaultAppTextLogoAndName /></>,
+    // rightColumnContent: <><AppThemeToggleButton /><AppThemeToggleButton /><AppThemeToggleButton /></>,
 };

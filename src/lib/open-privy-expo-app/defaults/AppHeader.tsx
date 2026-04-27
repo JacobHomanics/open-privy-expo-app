@@ -1,20 +1,17 @@
 import { StyleSheet, View } from "react-native";
 import { ReactNode } from "react";
-import DefaultAppBackButton from "@open-privy-expo-app/components/DefaultAppBackButton";
-import DefaultAppTextLogoAndName from "@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName";
-import AppThemeToggleButton from "@open-privy-expo-app/components/AppThemeToggleButton";
 
-export default function AppHeader({ customLeftColumn, customCenterColumn, customRightColumn }: { customLeftColumn?: ReactNode, customCenterColumn?: ReactNode, customRightColumn?: ReactNode }) {
+export default function AppHeader({ leftColumnContent, centerColumnContent, rightColumnContent }: { leftColumnContent?: ReactNode, centerColumnContent?: ReactNode, rightColumnContent?: ReactNode }) {
     return (
         <View style={styles.content}>
             <View style={styles.headerLeftColumn}>
-                {customLeftColumn ?? <><DefaultAppBackButton /><DefaultAppBackButton /></>}
+                {leftColumnContent}
             </View>
             <View style={styles.headerCenterColumn}>
-                {customCenterColumn ?? <><DefaultAppTextLogoAndName /><DefaultAppTextLogoAndName /></>}
+                {centerColumnContent}
             </View>
             <View style={styles.headerRightColumn}>
-                {customRightColumn ?? <><AppThemeToggleButton /><AppThemeToggleButton /><AppThemeToggleButton /></>}
+                {rightColumnContent}
             </View>
         </View>
     );
