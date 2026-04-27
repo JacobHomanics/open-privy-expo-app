@@ -5,7 +5,7 @@ import { Text } from 'react-native';
 import LoginButton from '@open-privy-expo-app/components/app-buttons/login/LoginButton';
 import { config } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
 
-export default function WelcomeScreenContent() {
+export default function Content() {
     const { theme } = useTheme();
 
     const styles = useMemo(() => StyleSheet.create({

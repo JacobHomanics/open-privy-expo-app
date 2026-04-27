@@ -1,7 +1,7 @@
 import { config } from '@open-privy-expo-app/configs/screens/WelcomeScreen.config';
 import DefaultAppTextLogoAndName from '@open-privy-expo-app/components/Logos/DefaultAppTextLogoAndName';
 import AppToggleButton from '@open-privy-expo-app/components/app-buttons/toggle/AppToggleButton';
-import ThreeSlotRow from './ThreeSlotRow';
+import ThreeSlotRow from '../../defaults/ThreeSlotRow';
 
 const defaultContent = {
     center: <DefaultAppTextLogoAndName customLogo={config?.header?.center?.customLogo} customName={config?.header?.center?.customName} />,
@@ -10,7 +10,7 @@ const defaultContent = {
     </>
 }
 
-export default function DefaultAppWelcomeScreenHeader() {
+export default function Header() {
     return (
         <ThreeSlotRow
             left={<></>}
