@@ -10,18 +10,29 @@ import { config } from '@open-privy-expo-app/configs/screens/SplashScreen.config
 type Props = NativeStackScreenProps<RootStackParamList, 'Splash'>;
 
 export default function SplashScreen({ navigation }: Props) {
-  const { isReady, user } = usePrivy();
+  const { isReady, user, error: privyError } = usePrivy();
   const { theme } = useTheme();
 
   useEffect(() => {
+    if (!config?.requireAuthentication && privyError) {
+      navigation.replace('Home');
+      return;
+    }
+
     if (!isReady) return;
 
     if (user) {
       navigation.replace('Home');
     } else {
-      navigation.replace('Welcome');
+      if (config?.requireAuthentication) {
+        navigation.replace('Welcome');
+      } else {
+        navigation.replace('Home');
+      }
     }
-  }, [isReady, user, navigation]);
+  }, [isReady, user, navigation, privyError]);
+
+  console.log(isReady, user);
 
   return (
     <View style={[styles.container, { backgroundColor: theme.background }]}>

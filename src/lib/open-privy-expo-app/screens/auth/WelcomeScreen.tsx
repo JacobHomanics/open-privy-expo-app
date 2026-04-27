@@ -103,33 +103,34 @@ export default function WelcomeScreen({ navigation }: Props) {
   }
 
   return (
-    <AppScreenDefaultLayout navigation={navigation} header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeaderCenter />)} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
-      <ScrollView
-        style={styles.scroll}
-        onLayout={(e) => setScrollViewportHeight(e.nativeEvent.layout.height)}
-        onContentSizeChange={(_, height) => setScrollContentHeight(height)}
-        contentContainerStyle={styles.scrollContent}
-        scrollEnabled={canScroll}
-        alwaysBounceVertical={canScroll}
-        bounces={canScroll}
-        {...(Platform.OS === 'android' ? { overScrollMode: canScroll ? 'auto' : 'never' as const } : {})}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="on-drag"
-        nestedScrollEnabled
-        showsVerticalScrollIndicator={canScroll}
-      >
-        <View style={[styles.centerColumn, { minHeight: centerColumnMinHeight }]}>
-          <View style={styles.topSlot}>
-            {config?.customTopBody ? config?.customTopBody : (config?.hideTopBody ? undefined : <DefaultBodyTopContent />)}
-          </View>
-          <View style={styles.loginRow}>
-            {loginButton()}
-          </View>
-          <View style={styles.bottomSlot}>
-            {config?.customBottomBody ? config?.customBottomBody : (config?.hideBottomBody ? undefined : <DefaultBodyBottomContent />)}
-          </View>
-        </View>
-      </ScrollView>
-    </AppScreenDefaultLayout>
+    <Text>Welcome</Text>
+    // <AppScreenDefaultLayout navigation={navigation} header={config?.customHeader ? config?.customHeader : (config?.hideHeader ? undefined : <DefaultAppHeaderCenter />)} stretchContent showThemeToggle={SHOW_THEME_TOGGLE} >
+    //   <ScrollView
+    //     style={styles.scroll}
+    //     onLayout={(e) => setScrollViewportHeight(e.nativeEvent.layout.height)}
+    //     onContentSizeChange={(_, height) => setScrollContentHeight(height)}
+    //     contentContainerStyle={styles.scrollContent}
+    //     scrollEnabled={canScroll}
+    //     alwaysBounceVertical={canScroll}
+    //     bounces={canScroll}
+    //     {...(Platform.OS === 'android' ? { overScrollMode: canScroll ? 'auto' : 'never' as const } : {})}
+    //     keyboardShouldPersistTaps="handled"
+    //     keyboardDismissMode="on-drag"
+    //     nestedScrollEnabled
+    //     showsVerticalScrollIndicator={canScroll}
+    //   >
+    //     <View style={[styles.centerColumn, { minHeight: centerColumnMinHeight }]}>
+    //       <View style={styles.topSlot}>
+    //         {config?.customTopBody ? config?.customTopBody : (config?.hideTopBody ? undefined : <DefaultBodyTopContent />)}
+    //       </View>
+    //       <View style={styles.loginRow}>
+    //         {loginButton()}
+    //       </View>
+    //       <View style={styles.bottomSlot}>
+    //         {config?.customBottomBody ? config?.customBottomBody : (config?.hideBottomBody ? undefined : <DefaultBodyBottomContent />)}
+    //       </View>
+    //     </View>
+    //   </ScrollView>
+    // </AppScreenDefaultLayout>
   );
 }
